@@ -19,6 +19,7 @@ package com.android.launcher3.qsb
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.R
 import javax.inject.Inject
 
@@ -26,7 +27,13 @@ import javax.inject.Inject
 open class QsbWidgetFactory @Inject constructor() {
 
     open fun createView(container: ViewGroup): View {
-        return LayoutInflater.from(container.context)
-            .inflate(R.layout.qsb_container_hotseat, container, false)
+        val context = container.context
+        val useGoogleStyle = LauncherPrefs.get(context).get(LauncherPrefs.QSB_STYLE_GOOGLE)
+        val qsbLayout = if (useGoogleStyle) {
+            R.layout.search_container_hotseat_google
+        } else {
+            R.layout.search_container_hotseat
+        }
+        return LayoutInflater.from(context).inflate(qsbLayout, container, false)
     }
 }

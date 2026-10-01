@@ -210,4 +210,27 @@
     <string name="app_category_books">Books</string>
     <string name="app_category_food">Food</string>
     <string name="app_category_other">Other</string>
+
+    <!-- Hotseat searchbar -->
+    <string name="search_bar_category_title">Search bar</string>
+    <string name="label_search">Search</string>
+    <string name="label_lens">Google Lens</string>
+    <string name="label_voice_search">Voice search</string>
+    <string name="label_ai_mode">AI Mode</string>
+    <string name="ai_mode_not_available">AI functionality not available</string>
+    <string name="label_gemini_search">AI mode</string>
+    <string name="dock_music_search_title">Music search</string>
+    <string name="dock_music_search_summary">Start music search on pressing mic icon</string>
+    <string name="dock_search_title">Google search bar</string>
+    <string name="dock_search_summary">Search bar in the bottom dock</string>
+    <string name="dock_theme_title">Themed icons</string>
+    <string name="dock_theme_summary">Use themed icons for search bar</string>
+    <string name="search_radius_title">Corner radius</string>
+    <string name="stroke_width_title">Stroke</string>
+    <string name="hotseat_qsb_height_title">QSB height</string>
+    <string name="hotseat_qsb_height_summary">Use full QSB height instead of icon height</string>
+    <string name="qsb_style_google_title">Google-style search bar</string>
+    <string name="qsb_style_google_summary">Use the QSB design with AI and Lens buttons</string>
+    <string name="pixel_qsb_bg_opacity_title">Pixel QSB background opacity</string>
+    <string name="pixel_qsb_bg_opacity_summary">Transparency of the Google-style search bar background</string>
 </resources>

@@ -277,10 +277,18 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val ALLAPPS_THEMED_ICONS = backedUpItem("pref_allapps_themed_icons", false)
         @JvmField val ALLOW_WALLPAPER_ZOOMING = backedUpItem("pref_allow_wallpaper_zooming", true)
         @JvmField val DARK_STATUS_BAR = backedUpItem("pref_dark_status_bar", false)
+        @JvmField val DOCK_MUSIC_SEARCH = backedUpItem("pref_dock_music_search", false)
+        @JvmField val QSB_STYLE_GOOGLE = backedUpItem("pref_qsb_style_google", true)
+        @JvmField val DOCK_SEARCH = backedUpItem("pref_dock_search", true)
+        @JvmField val DOCK_THEME = backedUpItem("pref_dock_theme", false)
         @JvmField val DRAWER_SCROLLBAR = backedUpItem("pref_drawer_scrollbar", true)
         @JvmField val DRAWER_SEARCH = backedUpItem("pref_drawer_search", true)
         @JvmField val FONT_SIZE = backedUpItem("pref_custom_font_size", 100)
         @JvmField val HOTSEAT_OPACITY = backedUpItem("pref_hotseat_opacity", 40)
+        @JvmField val HOTSEAT_QSB_OPACITY = backedUpItem("pref_hotseat_qsb_opacity", 100)
+        @JvmField val HOTSEAT_QSB_GOOGLE_OPACITY = backedUpItem("pref_hotseat_qsb_google_opacity", 100)
+        @JvmField val HOTSEAT_QSB_STROKE_WIDTH = backedUpItem("pref_hotseat_qsb_stroke_width", 0)
+        @JvmField val HOTSEAT_QSB_HEIGHT = backedUpItem("pref_hotseat_qsb_height", true)
         @JvmField val ICON_SIZE = backedUpItem("pref_custom_icon_size", 100)
         @JvmField val RECENTS_CLEAR_ALL = backedUpItem("pref_recents_clear_all", true)
         @JvmField val RECENTS_LENS = backedUpItem("pref_recents_lens", false)
@@ -398,15 +406,7 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
 
         @JvmStatic
         fun isHotseatQsbEnabled(context: Context): Boolean {
-            if (!Flags.enableQsbOnHotseat()) {
-                return false
-            }
-
-            return try {
-                get(context).get(SHOW_HOTSEAT_QSB)
-            } catch (ignored: IllegalStateException) {
-                true
-            }
+            return Utilities.showQSB(context)
         }
 
         @JvmStatic

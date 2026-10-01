@@ -110,7 +110,7 @@ public class Hotseat extends CellLayout implements Insettable {
     public Hotseat(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
 
-        if (Flags.enableQsbOnHotseat()) {
+        if (Utilities.showQSB(context)) {
             mQsb = LauncherComponentProvider.get(context).getQsbWidgetFactory().createView(this);
             addView(mQsb);
             if (mQsb instanceof Reorderable qsbReorderable) {

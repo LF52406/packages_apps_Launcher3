@@ -24,6 +24,7 @@ import android.util.DisplayMetrics
 import com.android.launcher3.DevicePaddings
 import com.android.launcher3.DeviceProfile
 import com.android.launcher3.InvariantDeviceProfile
+import com.android.launcher3.LauncherPrefs
 import com.android.launcher3.R
 import com.android.launcher3.Utilities.getIconSizeWithOverlap
 import com.android.launcher3.Utilities.getNormalizedIconDrawablePadding
@@ -270,6 +271,7 @@ data class WorkspaceProfile(
             hotseatBarBottomSpacePx: Int,
             hotseatQsbSpace: Int,
             isQsbInline: Boolean,
+            context: Context? = null,
         ): Int {
             return when {
                 isVerticalLayout -> {
@@ -281,9 +283,19 @@ data class WorkspaceProfile(
                     (max(iconSizePx, hotseatProfile.qsbVisualHeight) + hotseatBarBottomSpacePx)
                 }
                 else -> {
+                    val qsbHeight = if (context != null
+                        && LauncherPrefs.DOCK_SEARCH.get(context)
+                        && LauncherPrefs.HOTSEAT_QSB_HEIGHT.get(context)) {
+                        hotseatProfile.qsbVisualHeight
+                    } else if (context != null) {
+                        0
+                    } else {
+                        hotseatProfile.qsbVisualHeight
+                    }
+
                     (iconSizePx +
                         hotseatQsbSpace +
-                        hotseatProfile.qsbVisualHeight +
+                        qsbHeight +
                         hotseatBarBottomSpacePx)
                 }
             }
@@ -306,6 +318,7 @@ data class WorkspaceProfile(
             hotseatBarBottomSpacePx: Int,
             hotseatQsbSpace: Int,
             iconSize: Int,
+            context: Context? = null,
         ): Rect {
             // TODO : This is to update updateHotseatSizes, we need a better way to do
             // this
@@ -318,6 +331,7 @@ data class WorkspaceProfile(
                     hotseatBarBottomSpacePx = hotseatBarBottomSpacePx,
                     hotseatQsbSpace = hotseatQsbSpace,
                     isQsbInline = isQsbInline,
+                    context = context,
                 )
 
             when {
@@ -383,6 +397,7 @@ data class WorkspaceProfile(
             panelCount: Int,
             isItemLabelHidden: Boolean,
             metrics: DisplayMetrics,
+            context: Context? = null,
         ): WorkspaceProfile {
 
             val cellLayoutBorderSpacePx =
@@ -471,6 +486,7 @@ data class WorkspaceProfile(
                     hotseatBarBottomSpacePx = hotseatProfile.barBottomSpacePx,
                     hotseatQsbSpace = hotseatProfile.qsbSpace,
                     isQsbInline = isQsbInline,
+                    context = context,
                 )
 
             val (workspacePadding, cellLayoutPaddingPx) =
@@ -619,6 +635,7 @@ data class WorkspaceProfile(
                         isItemLabelHidden =
                             deviceProperties.deviceConfiguration.isWorkspaceItemsLabelHidden,
                         metrics = metrics,
+                        context = context,
                     )
 
                 else ->

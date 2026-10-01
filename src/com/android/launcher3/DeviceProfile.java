@@ -293,7 +293,13 @@ public class DeviceProfile {
                     responsiveAspectRatio, mDeviceProperties.getHeightPx());
         }
 
-        int qsbHeight = mIsHotseatQsbEnabled ? res.getDimensionPixelSize(R.dimen.qsb_widget_height) : 0;
+        // qsbHeight is 0 when QSB is disabled (DOCK_SEARCH=false) OR when the user has
+        // requested that QSB not add extra height to the hotseat bar (HOTSEAT_QSB_HEIGHT=false).
+        // By zeroing it here, all downstream paths (HotseatProfileInitialValues,
+        // HotseatProfile.Factory, WorkspaceProfileNonResponsiveFactory) automatically use 0
+        // for qsbVisualHeight and qsbSpace, without needing a Context themselves.
+        int qsbHeight = (mIsHotseatQsbEnabled && LauncherPrefs.HOTSEAT_QSB_HEIGHT.get(context))
+                ? res.getDimensionPixelSize(R.dimen.qsb_widget_height) : 0;
 
         HotseatProfileInitialValues hotseatProfileInitialValues =
                 HotseatProfileInitialValues.Factory.createHotseatProfileInitialValues(

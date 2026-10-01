@@ -109,6 +109,15 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (LauncherPrefs.SHOW_HOTSEAT_BG.getSharedPrefKey().equals(key) ||
                 LauncherPrefs.HOTSEAT_OPACITY.getSharedPrefKey().equals(key) ||
+                LauncherPrefs.DOCK_SEARCH.getSharedPrefKey().equals(key) ||
+                LauncherPrefs.QSB_STYLE_GOOGLE.getSharedPrefKey().equals(key) ||
+                LauncherPrefs.DOCK_THEME.getSharedPrefKey().equals(key) ||
+                LauncherPrefs.SEARCH_RADIUS_SIZE.getSharedPrefKey().equals(key) ||
+                LauncherPrefs.DOCK_MUSIC_SEARCH.getSharedPrefKey().equals(key) ||
+                LauncherPrefs.HOTSEAT_QSB_OPACITY.getSharedPrefKey().equals(key) ||
+                LauncherPrefs.HOTSEAT_QSB_GOOGLE_OPACITY.getSharedPrefKey().equals(key) ||
+                LauncherPrefs.HOTSEAT_QSB_STROKE_WIDTH.getSharedPrefKey().equals(key) ||
+                LauncherPrefs.HOTSEAT_QSB_HEIGHT.getSharedPrefKey().equals(key) ||
                 LauncherPrefs.SHOW_STATUS_BAR.getSharedPrefKey().equals(key) ||
                 LauncherPrefs.SHORT_PARALLAX.getSharedPrefKey().equals(key) ||
                 LauncherPrefs.SINGLE_PAGE_CENTER.getSharedPrefKey().equals(key) ||
@@ -170,6 +179,7 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
         private static final String KEY_MINUS_ONE = "pref_enable_minus_one";
 
         private Preference mShowGoogleAppPref;
+        private Preference mShowGoogleBarPref;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -204,7 +214,9 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
             initPreferences(screen);
 
             mShowGoogleAppPref = screen.findPreference(KEY_MINUS_ONE);
+            mShowGoogleBarPref = screen.findPreference(LauncherPrefs.DOCK_SEARCH.getSharedPrefKey());
             updateIsGoogleAppEnabled();
+            updateQsbStylePrefs();
 
             if (mHighLightKey != null
                     && !isKeyInPreferenceGroup(mHighLightKey, screen)) {
@@ -293,6 +305,9 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
             if (mShowGoogleAppPref != null) {
                 mShowGoogleAppPref.setEnabled(Utilities.isGSAEnabled(getContext()));
             }
+            if (mShowGoogleBarPref != null) {
+                mShowGoogleBarPref.setEnabled(Utilities.isGSAEnabled(getContext()));
+            }
         }
 
         @Override
@@ -310,6 +325,41 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
 
             if (mRestartOnResume) {
                 recreateActivityNow();
+            }
+            updateQsbStylePrefs();
+            LauncherPrefs.getPrefs(getContext())
+                    .registerOnSharedPreferenceChangeListener(mPrefListener);
+        }
+
+        @Override
+        public void onPause() {
+            super.onPause();
+            LauncherPrefs.getPrefs(getContext())
+                    .unregisterOnSharedPreferenceChangeListener(mPrefListener);
+        }
+
+        private final SharedPreferences.OnSharedPreferenceChangeListener mPrefListener =
+                (prefs, key) -> {
+                    if (LauncherPrefs.QSB_STYLE_GOOGLE.getSharedPrefKey().equals(key)) {
+                        updateQsbStylePrefs();
+                    }
+                };
+
+        private void updateQsbStylePrefs() {
+            boolean isGoogleStyle = LauncherPrefs.get(getContext())
+                    .get(LauncherPrefs.QSB_STYLE_GOOGLE);
+            // Standard QSB controls — enabled only when Google style is OFF
+            setQsbPrefEnabled(LauncherPrefs.HOTSEAT_QSB_OPACITY.getSharedPrefKey(), !isGoogleStyle);
+            setQsbPrefEnabled(LauncherPrefs.HOTSEAT_QSB_STROKE_WIDTH.getSharedPrefKey(), !isGoogleStyle);
+            setQsbPrefEnabled(LauncherPrefs.SEARCH_RADIUS_SIZE.getSharedPrefKey(), !isGoogleStyle);
+            // Google/Pixel QSB controls — enabled only when Google style is ON
+            setQsbPrefEnabled(LauncherPrefs.HOTSEAT_QSB_GOOGLE_OPACITY.getSharedPrefKey(), isGoogleStyle);
+        }
+
+        private void setQsbPrefEnabled(String key, boolean enabled) {
+            Preference pref = findPreference(key);
+            if (pref != null) {
+                pref.setEnabled(enabled);
             }
         }
 
