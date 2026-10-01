@@ -215,7 +215,18 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
             return;
         }
 
-        int taskCount = recentsView.getTaskViewCount();
+        // Count only non-dismissed tasks so that index-based transforms (elevation, stacking,
+        // position) are stable while a task is animating out.  Including the dismissed task in
+        // taskCount causes surviving tasks to receive wrong index values until the dismissed view
+        // is actually removed, producing a one-frame elevation/position jump.
+        int taskCount = 0;
+        int childCount = recentsView.getChildCount();
+        for (int i = 0; i < childCount; i++) {
+            View child = recentsView.getChildAt(i);
+            if (child instanceof TaskView && !((TaskView) child).isBeingDismissed()) {
+                taskCount++;
+            }
+        }
         if (taskCount == 0) {
             return;
         }
@@ -231,7 +242,6 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
         int pageSize = childWidth + pageSpacing;
 
         boolean isRtl = recentsView.isRtl();
-        int childCount = recentsView.getChildCount();
 
         int taskIndex = 0;
         for (int i = 0; i < childCount; i++) {
@@ -242,7 +252,18 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
             TaskView taskView = (TaskView) child;
 
             int pageScroll = recentsView.getScrollForPage(i);
-            float reflowTranslation = taskView.getPrimaryDismissTranslation();
+
+            // For the task being dismissed (user swipe), its primaryDismissTranslation is the
+            // swipe gesture offset along the primary axis, so we subtract it to keep the custom
+            // style pivot stable as the card flies out.
+            //
+            // For surviving tasks, primaryDismissTranslation is the reflow spring animation value.
+            // applyTranslationX() already zeroes dismissTranslationX under custom styles, so the
+            // view does NOT visually move by that amount.  Subtracting it here would corrupt
+            // scrollProgress on every spring frame and cause the surviving task to jitter.
+            float reflowTranslation = taskView.isBeingDismissed()
+                    ? taskView.getPrimaryDismissTranslation()
+                    : 0f;
             float scrollDelta = (scroll - pageScroll) - reflowTranslation;
 
             float scrollProgress = scrollDelta / (float) pageSize;
@@ -251,10 +272,14 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
             }
 
             mCachedTransform.reset();
-            mActiveHandler.calculateTransform(
-                    recentsView, taskView, taskIndex, taskCount, scrollProgress, mCachedTransform);
 
             if (taskView.isBeingDismissed()) {
+                // Calculate the style transform so the dismissed card retains its styled
+                // position/scale/rotation/elevation as it animates out.
+                mActiveHandler.calculateTransform(
+                        recentsView, taskView, taskIndex, taskCount, scrollProgress, mCachedTransform);
+
+                // Multiply the style-calculated alpha by the dismissal fade-out factor.
                 float dismissY = Math.abs(taskView.getSecondaryDismissTranslation());
                 float taskHeight = taskView.getHeight();
                 if (taskHeight <= 0) {
@@ -262,7 +287,14 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
                 }
                 float dismissProgress = Math.min(1f, dismissY / Math.max(1f, taskHeight * 0.5f));
                 mCachedTransform.alpha *= Math.max(0f, 1f - dismissProgress);
+
+                mCachedTransform.applyTo(taskView);
+                // taskIndex is NOT incremented: dismissed task is excluded from the index sequence.
+                continue;
             }
+
+            mActiveHandler.calculateTransform(
+                    recentsView, taskView, taskIndex, taskCount, scrollProgress, mCachedTransform);
 
             mCachedTransform.applyTo(taskView);
 
