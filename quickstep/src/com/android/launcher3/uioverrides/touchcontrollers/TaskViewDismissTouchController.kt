@@ -29,6 +29,7 @@ import com.android.launcher3.Utilities.boundToRange
 import com.android.launcher3.Utilities.debugLog
 import com.android.launcher3.Utilities.isRtl
 import com.android.launcher3.Utilities.mapToRange
+import com.android.launcher3.Utilities.pointInView
 import com.android.launcher3.statemanager.BaseState
 import com.android.launcher3.statemanager.StateManager.StateListener
 import com.android.launcher3.statemanager.StatefulContainer
@@ -84,6 +85,7 @@ class TaskViewDismissTouchController<CONTAINER, T : BaseState<T>>(
             }
         }
     private val tempTaskThumbnailBounds = Rect()
+    private val tempCoordinates = FloatArray(2)
 
     private var taskBeingDragged: TaskView? = null
     private var taskDragDisplacementValue: ViewMotionValue? = null
@@ -164,13 +166,36 @@ class TaskViewDismissTouchController<CONTAINER, T : BaseState<T>>(
 
     override fun onControllerTouchEvent(ev: MotionEvent?): Boolean = detector.onTouchEvent(ev)
 
+    /**
+     * Returns the visually topmost visible TaskView containing [ev]. This is resolved once on
+     * ACTION_DOWN; [taskBeingDragged] then remains the target for the complete gesture.
+     */
+    private fun findTopmostTaskViewAt(ev: MotionEvent): TaskView? =
+        recentsView.taskViews
+            .filter { taskView ->
+                if (!recentsView.isTaskViewVisible(taskView)) {
+                    return@filter false
+                }
+                tempCoordinates[0] = ev.x
+                tempCoordinates[1] = ev.y
+                container.dragLayer.mapCoordInSelfToDescendant(taskView, tempCoordinates)
+                pointInView(taskView, tempCoordinates[0], tempCoordinates[1], 0f)
+            }
+            // Android draws the greatest Z on top. Equal-Z siblings are drawn in child-index order,
+            // so the later child is the visible one at an overlap.
+            .maxWithOrNull(compareBy<TaskView> { it.z }.thenBy { recentsView.indexOfChild(it) })
+
     private fun onActionDown(ev: MotionEvent): Boolean {
         if (!canInterceptTouch(ev)) {
             return false
         }
         val taskBeingDragged =
-            recentsView.taskViews.firstOrNull {
-                recentsView.isTaskViewVisible(it) && container.dragLayer.isEventOverView(it, ev)
+            if (recentsView.recentStyleController?.isCustomStyleActive == true) {
+                findTopmostTaskViewAt(ev)
+            } else {
+                recentsView.taskViews.firstOrNull {
+                    recentsView.isTaskViewVisible(it) && container.dragLayer.isEventOverView(it, ev)
+                }
             }
                 // If event is not over a taskView, check if it would have been either over the
                 // currently dismissing task being dragged, or over where the next task will be.
