@@ -280,6 +280,23 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
     }
 
     /**
+     * Returns whether any user-configurable overview action is currently visible.
+     */
+    public boolean hasVisibleUserActions() {
+        return findViewById(R.id.action_screenshot).getVisibility() == VISIBLE
+                || findViewById(R.id.action_lens).getVisibility() == VISIBLE
+                || findViewById(R.id.action_clear_all).getVisibility() == VISIBLE;
+    }
+
+    /**
+     * Returns the laid out height of the user-configurable overview actions container.
+     */
+    public int getVisibleUserActionsHeight() {
+        return hasVisibleUserActions() ? Math.max(mActionButtons.getHeight(),
+                mActionButtons.getMeasuredHeight()) : 0;
+    }
+
+    /**
      * Set listener for callbacks on action button taps.
      *
      * @param callbacks for callbacks, or {@code null} to clear the listener.
@@ -327,14 +344,28 @@ public class OverviewActionsView<T extends OverlayUICallbacks> extends FrameLayo
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        boolean actionVisibilityChanged = true;
         if (LauncherPrefs.RECENTS_SCREENSHOT.getSharedPrefKey().equals(key)) {
             mScreenshot = prefs.getBoolean(key, true);
         } else if (LauncherPrefs.RECENTS_CLEAR_ALL.getSharedPrefKey().equals(key)) {
             mClearAll = prefs.getBoolean(key, true);
         } else if (LauncherPrefs.RECENTS_LENS.getSharedPrefKey().equals(key)) {
             mLens = prefs.getBoolean(key, false);
+        } else {
+            actionVisibilityChanged = false;
         }
+        if (!actionVisibilityChanged) {
+            return;
+        }
+
         updateVisibilities();
+        RecentsViewContainer container = RecentsViewContainer.containerFromContext(getContext());
+        View overviewPanel = container.getOverviewPanel();
+        if (overviewPanel instanceof RecentsView<?, ?> recentsView) {
+            recentsView.requestLayout();
+            recentsView.updateCurveProperties();
+            recentsView.invalidate();
+        }
     }
 
     public void updateHiddenFlags(@ActionsHiddenFlags int visibilityFlags, boolean enable) {

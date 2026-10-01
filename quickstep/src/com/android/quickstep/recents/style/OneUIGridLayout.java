@@ -24,7 +24,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.android.launcher3.DeviceProfile;
+import com.android.launcher3.R;
 import com.android.quickstep.views.ClearAllButton;
+import com.android.quickstep.views.OverviewActionsView;
 import com.android.quickstep.views.RecentsView;
 import com.android.quickstep.views.TaskView;
 
@@ -34,7 +36,21 @@ public class OneUIGridLayout implements RecentLayoutHandler {
     private static final float COL_SPACING_DP = 12f;
     private static final float ROW_SPACING_DP = 12f;
     private static final float TOP_PADDING_DP = 16f;
-    private static final float BOTTOM_CLEARANCE_DP = 80f;
+
+    private float getBottomPadding(RecentsView<?, ?> recentsView, int insetsBottom) {
+        float bottomPadding = insetsBottom;
+        if (recentsView.getContainer() == null) {
+            return bottomPadding;
+        }
+
+        OverviewActionsView<?> actionsView = recentsView.getContainer().getActionsView();
+        if (actionsView != null && actionsView.hasVisibleUserActions()) {
+            bottomPadding += actionsView.getVisibleUserActionsHeight();
+            bottomPadding += recentsView.getResources().getDimensionPixelSize(
+                    R.dimen.overview_actions_top_margin);
+        }
+        return bottomPadding;
+    }
 
     private int getBaseScroll(RecentsView<?, ?> recentsView) {
         int childCount = recentsView.getChildCount();
@@ -259,7 +275,7 @@ public class OneUIGridLayout implements RecentLayoutHandler {
         float colSpacing = COL_SPACING_DP * density;
         float rowSpacing = ROW_SPACING_DP * density;
         float topPadding = insetsTop + (TOP_PADDING_DP * density);
-        float bottomPadding = insetsBottom + (BOTTOM_CLEARANCE_DP * density);
+        float bottomPadding = getBottomPadding(recentsView, insetsBottom);
 
         float availableWidth = Math.max(100f, containerWidth - (2f * horizontalMargin) - colSpacing);
         float cardWidth = availableWidth / 2f;
@@ -357,7 +373,7 @@ public class OneUIGridLayout implements RecentLayoutHandler {
 
         float rowSpacing = ROW_SPACING_DP * density;
         float topPadding = insetsTop + (TOP_PADDING_DP * density);
-        float bottomPadding = insetsBottom + (BOTTOM_CLEARANCE_DP * density);
+        float bottomPadding = getBottomPadding(recentsView, insetsBottom);
 
         float availableHeight = Math.max(100f, containerHeight - topPadding - bottomPadding - ((rowsPerPage - 1) * rowSpacing));
         float cardHeight = availableHeight / (float) rowsPerPage;
