@@ -275,6 +275,11 @@ public class SettingsRecents extends CollapsingToolbarBaseActivity
         }
 
         protected boolean initPreference(Preference preference) {
+            String key = preference.getKey();
+            if (key != null && LauncherPrefs.RECENTS_STYLE.getSharedPrefKey().equals(key)) {
+                LauncherDisplayInfo info = DisplayController.INSTANCE.get(getContext()).getInfo();
+                return !info.isLargeScreen(info.realBounds);
+            }
             return true;
         }
 

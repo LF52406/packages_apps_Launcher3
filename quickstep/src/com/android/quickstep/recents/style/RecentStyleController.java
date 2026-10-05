@@ -25,7 +25,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.LauncherPrefs;
+import com.android.launcher3.display.DisplayController;
+import com.android.launcher3.display.LauncherDisplayInfo;
 import com.android.quickstep.views.RecentsView;
 import com.android.quickstep.views.TaskView;
 
@@ -42,6 +45,7 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
     private RecentStyle mPendingStyle = null;
     private RecentLayoutHandler mActiveHandler = new DefaultRecentLayout();
     private boolean mIsLaunching = false;
+    private boolean mWasLargeScreen = false;
 
     public RecentStyleController(@NonNull Context context) {
         mContext = context;
@@ -50,8 +54,24 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
         loadStylePreference();
     }
 
+    public boolean isLargeScreen() {
+        if (mRecentsView != null && mRecentsView.getContainer() != null) {
+            DeviceProfile dp = mRecentsView.getContainer().getDeviceProfile();
+            if (dp != null) {
+                return dp.getDeviceProperties().isLargeScreen();
+            }
+        }
+        try {
+            LauncherDisplayInfo info = DisplayController.INSTANCE.get(mContext).getInfo();
+            return info.isLargeScreen(info.realBounds);
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public void attach(@NonNull RecentsView<?, ?> recentsView) {
         mRecentsView = recentsView;
+        mWasLargeScreen = isLargeScreen();
         try {
             LauncherPrefs.getPrefs(mContext).registerOnSharedPreferenceChangeListener(this);
         } catch (Exception e) {
@@ -85,11 +105,32 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
 
     @NonNull
     public RecentStyle getCurrentStyle() {
+        if (isLargeScreen()) {
+            return RecentStyle.DEFAULT;
+        }
         return mCurrentStyle;
     }
 
     public boolean isCustomStyleActive() {
+        boolean largeScreen = isLargeScreen();
+        if (largeScreen != mWasLargeScreen) {
+            onLargeScreenStateChanged(largeScreen);
+        }
+        if (largeScreen) {
+            return false;
+        }
         return mCurrentStyle != RecentStyle.DEFAULT;
+    }
+
+    private void onLargeScreenStateChanged(boolean isLargeScreen) {
+        mWasLargeScreen = isLargeScreen;
+        if (mRecentsView != null) {
+            mRecentsView.post(() -> {
+                setStyle(mCurrentStyle);
+            });
+        } else {
+            mActiveHandler = isLargeScreen ? new DefaultRecentLayout() : createHandlerForStyle(mCurrentStyle);
+        }
     }
 
     public boolean isLowRam() {
@@ -137,7 +178,7 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
     }
 
     public void setStyle(@NonNull RecentStyle newStyle) {
-        if (mCurrentStyle == newStyle && mPendingStyle == null) {
+        if (mCurrentStyle == newStyle && mPendingStyle == null && !mWasLargeScreen) {
             return;
         }
 
@@ -179,7 +220,7 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
         }
 
         mCurrentStyle = newStyle;
-        mActiveHandler = createHandlerForStyle(newStyle);
+        mActiveHandler = isLargeScreen() ? new DefaultRecentLayout() : createHandlerForStyle(newStyle);
 
         if (mRecentsView != null) {
             mActiveHandler.onAttached(mRecentsView);
@@ -195,6 +236,9 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
 
     @NonNull
     private RecentLayoutHandler createHandlerForStyle(@NonNull RecentStyle style) {
+        if (isLargeScreen()) {
+            return new DefaultRecentLayout();
+        }
         switch (style) {
             case IOS:
                 return new IOSRecentLayout();

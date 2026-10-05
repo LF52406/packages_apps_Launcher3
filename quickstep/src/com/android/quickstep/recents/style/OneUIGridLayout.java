@@ -45,9 +45,41 @@ public class OneUIGridLayout implements RecentLayoutHandler {
 
         OverviewActionsView<?> actionsView = recentsView.getContainer().getActionsView();
         if (actionsView != null && actionsView.hasVisibleUserActions()) {
-            bottomPadding += actionsView.getVisibleUserActionsHeight();
-            bottomPadding += recentsView.getResources().getDimensionPixelSize(
+            int actionsTopMargin = recentsView.getResources().getDimensionPixelSize(
                     R.dimen.overview_actions_top_margin);
+            int containerHeight = recentsView.getHeight();
+            if (containerHeight <= 0) {
+                containerHeight = recentsView.getResources().getDisplayMetrics().heightPixels;
+            }
+
+            // 1. If actionButtons is laid out, use its actual measured screen position relative to recentsView
+            View actionButtons = actionsView.findViewById(R.id.action_buttons);
+            if (actionButtons != null && actionButtons.getHeight() > 0) {
+                int[] actionsLoc = new int[2];
+                actionButtons.getLocationOnScreen(actionsLoc);
+                int[] recentsLoc = new int[2];
+                recentsView.getLocationOnScreen(recentsLoc);
+                int actionButtonsTopInRecents = actionsLoc[1] - recentsLoc[1];
+                if (actionButtonsTopInRecents > 0 && actionButtonsTopInRecents < containerHeight) {
+                    float occupiedFromBottom = containerHeight - actionButtonsTopInRecents;
+                    return Math.max(bottomPadding, occupiedFromBottom + actionsTopMargin);
+                }
+            }
+
+            // 2. If not yet laid out, use mLastComputedTaskSize.bottom which AOSP aligned the action bar against
+            Rect taskSize = recentsView.getLastComputedTaskSize();
+            if (taskSize != null && taskSize.bottom > 0 && taskSize.bottom < containerHeight) {
+                float spaceBelowTask = containerHeight - taskSize.bottom;
+                return Math.max(bottomPadding, spaceBelowTask);
+            }
+
+            // 3. Fallback: actions height + margins + insets
+            int actionsHeight = actionsView.getVisibleUserActionsHeight();
+            if (actionsHeight <= 0) {
+                actionsHeight = recentsView.getResources().getDimensionPixelSize(
+                        R.dimen.overview_actions_height);
+            }
+            bottomPadding += actionsHeight + (2 * actionsTopMargin);
         }
         return bottomPadding;
     }
