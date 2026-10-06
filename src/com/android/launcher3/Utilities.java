@@ -997,7 +997,7 @@ public final class Utilities {
     }
 
     public static boolean showQSB(Context context) {
-        return isGSAEnabled(context) && isQSBEnabled(context);
+        return isQSBEnabled(context);
     }
 
     private static boolean isQSBEnabled(Context context) {

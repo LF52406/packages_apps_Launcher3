@@ -179,7 +179,6 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
         private static final String KEY_MINUS_ONE = "pref_enable_minus_one";
 
         private Preference mShowGoogleAppPref;
-        private Preference mShowGoogleBarPref;
 
         @Override
         public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -214,7 +213,6 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
             initPreferences(screen);
 
             mShowGoogleAppPref = screen.findPreference(KEY_MINUS_ONE);
-            mShowGoogleBarPref = screen.findPreference(LauncherPrefs.DOCK_SEARCH.getSharedPrefKey());
             updateIsGoogleAppEnabled();
             updateQsbStylePrefs();
 
@@ -305,9 +303,6 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
             if (mShowGoogleAppPref != null) {
                 mShowGoogleAppPref.setEnabled(Utilities.isGSAEnabled(getContext()));
             }
-            if (mShowGoogleBarPref != null) {
-                mShowGoogleBarPref.setEnabled(Utilities.isGSAEnabled(getContext()));
-            }
         }
 
         @Override
@@ -346,13 +341,27 @@ public class SettingsHomescreen extends CollapsingToolbarBaseActivity
                 };
 
         private void updateQsbStylePrefs() {
-            boolean isGoogleStyle = LauncherPrefs.get(getContext())
+            boolean hasGoogleApp = Utilities.isGSAEnabled(getContext());
+            boolean isGoogleStyle = hasGoogleApp && LauncherPrefs.get(getContext())
                     .get(LauncherPrefs.QSB_STYLE_GOOGLE);
-            // Standard QSB controls — enabled only when Google style is OFF
+
+            Preference googleStylePref =
+                    findPreference(LauncherPrefs.QSB_STYLE_GOOGLE.getSharedPrefKey());
+            if (googleStylePref != null) {
+                googleStylePref.setEnabled(hasGoogleApp);
+            }
+
+            Preference musicSearchPref =
+                    findPreference(LauncherPrefs.DOCK_MUSIC_SEARCH.getSharedPrefKey());
+            if (musicSearchPref != null) {
+                musicSearchPref.setEnabled(hasGoogleApp);
+            }
+
+            // Standard QSB controls — enabled when Google style is unavailable or disabled.
             setQsbPrefEnabled(LauncherPrefs.HOTSEAT_QSB_OPACITY.getSharedPrefKey(), !isGoogleStyle);
             setQsbPrefEnabled(LauncherPrefs.HOTSEAT_QSB_STROKE_WIDTH.getSharedPrefKey(), !isGoogleStyle);
             setQsbPrefEnabled(LauncherPrefs.SEARCH_RADIUS_SIZE.getSharedPrefKey(), !isGoogleStyle);
-            // Google/Pixel QSB controls — enabled only when Google style is ON
+            // Google/Pixel QSB controls — enabled only when Google style can actually be used.
             setQsbPrefEnabled(LauncherPrefs.HOTSEAT_QSB_GOOGLE_OPACITY.getSharedPrefKey(), isGoogleStyle);
         }
 

@@ -14,12 +14,13 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import com.android.launcher3.Launcher;
 import com.android.launcher3.LauncherPrefs;
 import com.android.launcher3.R;
 import com.android.launcher3.Reorderable;
 import com.android.launcher3.Utilities;
-import com.android.launcher3.qsb.QsbContainerView;
 import com.android.launcher3.util.MultiTranslateDelegate;
+import com.android.launcher3.views.ActivityContext;
 import com.android.launcher3.util.Themes;
 import android.view.View;
 
@@ -135,21 +136,46 @@ public class QsbLayout extends FrameLayout implements Reorderable {
     }
 
     private void setUpMainSearch() {
-        setOnClickListener(view -> {
+        setOnClickListener(view -> launchSearch(view.getContext()));
+    }
+
+    private void launchSearch(Context context) {
+        String searchPackage = QsbContainerView.getSearchWidgetPackageName(context);
+        if (searchPackage != null) {
             try {
-                Intent intent = new Intent();
-                intent.setAction("android.search.action.GLOBAL_SEARCH");
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                intent.setPackage(QsbContainerView.getSearchWidgetPackageName(view.getContext()));
-                view.getContext().startActivity(intent);
+                Intent intent = new Intent("android.search.action.GLOBAL_SEARCH")
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                        .setPackage(searchPackage);
+                context.startActivity(intent);
+                return;
             } catch (Exception e) {
-                Log.e(TAG, "Main search launch failed", e);
+                Log.d(TAG, "External search unavailable, falling back to launcher search", e);
             }
-        });
+        }
+
+        ActivityContext activityContext = ActivityContext.lookupContextNoThrow(context);
+        if (activityContext instanceof Launcher launcher) {
+            launcher.toggleAllApps(true);
+            return;
+        }
+
+        try {
+            context.startActivity(new Intent(Intent.ACTION_ALL_APPS)
+                    .setClass(context, Launcher.class)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+        } catch (Exception e) {
+            Log.e(TAG, "Launcher search fallback failed", e);
+        }
     }
 
     private void setupGIcon() {
         if (gIcon == null) return;
+
+        if (!Utilities.isGSAEnabled(getContext())) {
+            gIcon.setVisibility(View.GONE);
+            return;
+        }
+        gIcon.setVisibility(View.VISIBLE);
 
         gIcon.setImageResource(mIsThemed
                 ? R.drawable.ic_super_g_themed
@@ -170,6 +196,12 @@ public class QsbLayout extends FrameLayout implements Reorderable {
 
     private void setupLensIcon() {
         if (lensIcon == null) return;
+
+        if (!Utilities.isGSAEnabled(getContext())) {
+            lensIcon.setVisibility(View.GONE);
+            return;
+        }
+        lensIcon.setVisibility(View.VISIBLE);
 
         lensIcon.setImageResource(mIsThemed
                 ? R.drawable.ic_lens_themed
