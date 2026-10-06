@@ -142,17 +142,47 @@ public class QsbLayout extends FrameLayout implements Reorderable {
     private void launchSearch(Context context) {
         String searchPackage = QsbContainerView.getSearchWidgetPackageName(context);
         if (searchPackage != null) {
-            try {
-                Intent intent = new Intent("android.search.action.GLOBAL_SEARCH")
-                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                        .setPackage(searchPackage);
-                context.startActivity(intent);
+            if (tryStartSearchActivity(
+                    context, "android.search.action.GLOBAL_SEARCH", searchPackage)) {
                 return;
+            }
+            if (tryStartSearchActivity(context, Intent.ACTION_SEARCH, searchPackage)) {
+                return;
+            }
+
+            try {
+                Intent launchIntent =
+                        context.getPackageManager().getLaunchIntentForPackage(searchPackage);
+                if (launchIntent != null) {
+                    launchIntent.addFlags(
+                            Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    context.startActivity(launchIntent);
+                    return;
+                }
             } catch (Exception e) {
-                Log.d(TAG, "External search unavailable, falling back to launcher search", e);
+                Log.d(TAG, "Search provider launch activity unavailable: " + searchPackage, e);
             }
         }
 
+        openLauncherSearch(context);
+    }
+
+    private boolean tryStartSearchActivity(Context context, String action, String searchPackage) {
+        try {
+            context.startActivity(
+                    new Intent(action)
+                            .addFlags(
+                                    Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                            .setPackage(searchPackage));
+            return true;
+        } catch (Exception e) {
+            Log.d(TAG, "Search action unavailable: " + action + " for " + searchPackage, e);
+            return false;
+        }
+    }
+
+    private void openLauncherSearch(Context context) {
         ActivityContext activityContext = ActivityContext.lookupContextNoThrow(context);
         if (activityContext instanceof Launcher launcher) {
             launcher.toggleAllApps(true);
@@ -160,9 +190,12 @@ public class QsbLayout extends FrameLayout implements Reorderable {
         }
 
         try {
-            context.startActivity(new Intent(Intent.ACTION_ALL_APPS)
-                    .setClass(context, Launcher.class)
-                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+            context.startActivity(
+                    new Intent(Intent.ACTION_ALL_APPS)
+                            .setClass(context, Launcher.class)
+                            .addFlags(
+                                    Intent.FLAG_ACTIVITY_NEW_TASK
+                                            | Intent.FLAG_ACTIVITY_SINGLE_TOP));
         } catch (Exception e) {
             Log.e(TAG, "Launcher search fallback failed", e);
         }
