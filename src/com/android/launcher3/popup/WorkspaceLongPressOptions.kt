@@ -18,7 +18,7 @@ package com.android.launcher3.popup
 
 import android.content.Context
 import android.content.Intent
-import android.text.TextUtils
+import android.content.pm.PackageManager
 import android.view.View
 import android.widget.Toast
 import com.android.launcher3.BuildConfig
@@ -200,11 +200,7 @@ object WorkspaceLongPressOptions {
                 .putExtra(EXTRA_WALLPAPER_OFFSET, launcher.workspace.wallpaperOffsetForCenterPage)
                 .putExtra(EXTRA_WALLPAPER_LAUNCH_SOURCE, "app_launched_launcher")
                 .putExtra(EXTRA_WALLPAPER_FLAVOR, "focus_wallpaper")
-        val isGoogleWpInstalled = com.android.internal.util.mist.Utils.isPackageInstalled(v.context, GOOGLE_WP_PKG)
-        val pickerPackage = if (isGoogleWpInstalled) GOOGLE_WP_PKG else DEFAULT_WP_PKG
-        if (!TextUtils.isEmpty(pickerPackage)) {
-            intent.setPackage(pickerPackage)
-        }
+        resolveWallpaperPickerPackage(v.context, intent)?.let(intent::setPackage)
         launcher.startActivitySafely(
             v,
             intent,
@@ -213,6 +209,16 @@ object WorkspaceLongPressOptions {
                 it.container = Favorites.CONTAINER_SETTINGS
             },
         )
+    }
+
+    private fun resolveWallpaperPickerPackage(context: Context, intent: Intent): String? {
+        val packageManager = context.packageManager
+        return arrayOf(GOOGLE_WP_PKG, DEFAULT_WP_PKG).firstOrNull { packageName ->
+            packageManager.resolveActivity(
+                Intent(intent).setPackage(packageName),
+                PackageManager.MATCH_DEFAULT_ONLY,
+            ) != null
+        }
     }
 
     private fun createNewFolder(ac: ActivityContext) {

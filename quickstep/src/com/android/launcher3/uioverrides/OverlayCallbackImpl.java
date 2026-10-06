@@ -27,6 +27,7 @@ import android.view.View;
 import com.android.launcher3.DeviceProfile;
 import com.android.launcher3.DeviceProfile.OnDeviceProfileChangeListener;
 import com.android.launcher3.Launcher;
+import com.android.launcher3.Utilities;
 import com.android.systemui.plugins.shared.LauncherOverlayManager;
 import com.android.systemui.plugins.shared.LauncherOverlayManager.LauncherOverlayTouchProxy;
 
@@ -182,7 +183,8 @@ public class OverlayCallbackImpl
 
     private LauncherClient.ClientOptions getClientOptions(SharedPreferences prefs) {
         return new LauncherClient.ClientOptions(
-                prefs.getBoolean(KEY_ENABLE_MINUS_ONE, true),
+                prefs.getBoolean(KEY_ENABLE_MINUS_ONE, true)
+                        && Utilities.isGSAEnabled(mLauncher),
                 true, /* enableHotword */
                 true /* enablePrewarming */
         );
