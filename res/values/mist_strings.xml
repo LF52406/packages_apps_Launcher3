@@ -55,7 +55,7 @@
     <string name="updating_launcher_components">Restarting launcher to update components\u2026</string>
 
     <!-- DT2S -->
-    <string name="pref_sleep_gesture_title">Double tap to turn off screen</string>
+    <string name="pref_sleep_gesture_title">Double tap to turn off the screen</string>
     <string name="pref_sleep_gesture_summary">Double-tap an empty area of the Home screen to turn off the screen</string>
     <string name="pref_sleep_gesture_haptic_title">Vibrate on double tap</string>
     <string name="pref_sleep_gesture_haptic_summary">Provide haptic feedback when double tapping to turn off the screen</string>
@@ -102,8 +102,8 @@
     <string name="icon_two_lines_title">Use two lines for app labels</string>
 
     <!-- Kill App recents action shortcut -->
-    <string name="recent_task_option_kill_app">Kill</string>
-    <string name="recents_app_killed">App killed</string>
+    <string name="recent_task_option_kill_app">Force stop</string>
+    <string name="recents_app_killed">App force-stopped</string>
 
     <!-- Row Height -->
     <string name="row_height_title">Row height</string>
@@ -165,7 +165,7 @@
     </string-array>
 
     <!-- Parallax -->
-    <string name="short_parallax_title">Full parallax with few pages</string>
+    <string name="short_parallax_title">Full wallpaper parallax with few pages</string>
     <string name="short_parallax_summary">Use full wallpaper scrolling even when the Home screen has only a few pages</string>
     <string name="single_page_center_title">Center wallpaper on a single page</string>
     <string name="single_page_center_summary">Center the wallpaper when only one Home screen page is used</string>
@@ -175,8 +175,8 @@
     <string name="drawer_scrollbar_summary">Show a scrollbar on the side of the app drawer</string>
 
     <!-- Dark Status Bar -->
-    <string name="perf_dark_status_bar_title">Dark status bar</string>
-    <string name="perf_dark_status_bar_summary">Always use a dark status bar on the Home screen</string>
+    <string name="perf_dark_status_bar_title">Dark status bar icons</string>
+    <string name="perf_dark_status_bar_summary">Always use dark status bar icons on the Home screen</string>
 
     <string name="app_library_title">App library</string>
     <string name="app_library_search_hint">App library</string>
@@ -185,7 +185,7 @@
     <string name="pref_app_library_title">App library</string>
     <string name="pref_app_library_summary">Show an iOS-style app library organized by category</string>
     <string name="pref_app_library_single_page_title">Single Home screen page</string>
-    <string name="pref_app_library_single_page_summary">Keep one Home screen page and open the App library with one swipe</string>
+    <string name="pref_app_library_single_page_summary">Keep one Home screen page and open the app library with one swipe</string>
 
     <string name="app_category_suggestions">Suggestions</string>
     <string name="app_category_recently_added">Recently added</string>
@@ -231,6 +231,6 @@
     <string name="hotseat_qsb_height_summary">Use the full search bar height instead of icon height</string>
     <string name="qsb_style_google_title">Google-style search bar</string>
     <string name="qsb_style_google_summary">Use the Google-style layout with AI and Lens buttons</string>
-    <string name="pixel_qsb_bg_opacity_title">Google-style search bar opacity</string>
-    <string name="pixel_qsb_bg_opacity_summary">Adjust the background transparency of the Google-style search bar</string>
+    <string name="pixel_qsb_bg_opacity_title">Google-style search bar background opacity</string>
+    <string name="pixel_qsb_bg_opacity_summary">Adjust the transparency of the Google-style search bar background</string>
 </resources>
