@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 MistOS Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <string name="settings_title">Налаштування головного екрана</string>
+    <string name="home_category_title">Головний екран</string>
+    <string name="home_category_summary">Налаштування поведінки та макета головного екрана</string>
+    <string name="icons_category_title">Значки</string>
+    <string name="icons_category_summary">Налаштування розміру та вигляду значків</string>
+    <string name="app_drawer_category_title">Меню додатків</string>
+    <string name="app_drawer_category_summary">Налаштування меню додатків</string>
+    <string name="recents_category_title">Нещодавні додатки</string>
+    <string name="recents_category_summary">Налаштування екрана нещодавніх додатків</string>
+    <string name="misc_category_title">Інше</string>
+    <string name="misc_category_summary">Інші параметри головного екрана</string>
+    <string name="general_category_title">Загальні</string>
+    <string name="interface_category_title">Інтерфейс</string>
+    <string name="actions_category_title">Швидкі дії</string>
+    <string name="title_show_google_app">Доступ до додатка Google жестом</string>
+    <string name="msg_minus_one_on_left">Проведіть вправо від головного екрана</string>
+    <string name="msg_minus_one_on_right">Проведіть вліво від головного екрана</string>
+    <string name="suggestion_pref_screen_title">Пропозиції</string>
+    <string name="suggestion_pref_screen_desc">Пропозиції в меню додатків і на головному екрані</string>
+    <string name="pref_restart_title">Перезапустити</string>
+    <string name="pref_restart_summary">Перезапустити лаунчер, щоб застосувати очікувані зміни</string>
+    <string name="restarting_launcher">Перезапуск лаунчера\u2026</string>
+    <string name="restarting_launcher_changes">Перезапуск лаунчера для застосування змін\u2026</string>
+    <string name="updating_launcher_components">Перезапуск лаунчера для оновлення компонентів\u2026</string>
+    <string name="pref_sleep_gesture_title">Подвійне торкання для вимкнення екрана</string>
+    <string name="pref_sleep_gesture_summary">Двічі торкніться вільного місця на головному екрані, щоб вимкнути екран</string>
+    <string name="pref_sleep_gesture_haptic_title">Вібрація при подвійному торканні</string>
+    <string name="pref_sleep_gesture_haptic_summary">Вібрувати при подвійному торканні для вимкнення екрана</string>
+    <string name="settings_lock_layout_title">Блокування макета головного екрана</string>
+    <string name="settings_lock_layout_summary_on">Значки й віджети не можна додавати, видаляти або переміщувати на головному екрані</string>
+    <string name="settings_lock_layout_summary_off">Значки й віджети можна додавати, видаляти та переміщувати на головному екрані</string>
+    <string name="settings_edit_widgets_error">Не вдалося додати віджет на головний екран</string>
+    <string name="pref_themed_icons_title">Тематичні значки в меню додатків</string>
+    <string name="pref_themed_icons_summary">Використовувати в меню додатків ті самі тематичні значки, що й на головному екрані</string>
+    <string name="desktop_show_labels">Показувати підписи значків на головному екрані</string>
+    <string name="drawer_show_labels">Показувати підписи значків у меню додатків</string>
+    <string name="trust_apps_manager_name">Приховані й захищені додатки</string>
+    <string name="trust_apps_auth_manager">Розблокуйте пристрій, щоб керувати прихованими й захищеними додатками</string>
+    <string name="trust_apps_auth_open_app">Підтвердьте особу, щоб відкрити %1$s</string>
+    <string name="trust_apps_loading">Завантаження\u2026</string>
+    <string name="trust_apps_no_lock_error">Налаштуйте надійне блокування екрана, щоб обмежити доступ до додатків</string>
+    <string name="trust_apps_help">Довідка</string>
+    <string name="trust_apps_info_hidden">Приховані додатки та їхні віджети не відображаються в меню додатків</string>
+    <string name="trust_apps_info_protected">Для запуску захищених додатків із лаунчера потрібно підтвердити особу</string>
+    <string name="icon_size_title">Розмір значків</string>
+    <string name="font_size_title">Розмір шрифту</string>
+    <string name="pause">Призупинити</string>
+    <string name="pause_apps_dialog_title">Призупинити %1$s?</string>
+    <string name="pause_apps_dialog_message">Сповіщення від %1$s будуть призупинені</string>
+    <string name="paused_apps_dialog_title">Додаток призупинено</string>
+    <string name="paused_apps_dialog_message">Додаток %1$s призупинено з лаунчера</string>
+    <string name="paused_apps_drop_target_label">Призупинити додаток</string>
+    <string name="icon_two_lines_title">Два рядки для назв додатків</string>
+    <string name="recent_task_option_kill_app">Завершити</string>
+    <string name="recents_app_killed">Додаток завершено</string>
+    <string name="row_height_title">Висота рядка</string>
+    <string name="hotseat_bg_title">Фон док-панелі</string>
+    <string name="hotseat_bg_summary">Додати напівпрозорий фон до док-панелі</string>
+    <string name="background_opacity_title">Непрозорість фону</string>
+    <string name="pref_show_hotseat_qsb_title">Показувати рядок пошуку</string>
+    <string name="pref_show_hotseat_qsb_summary">У нижній частині головного екрана</string>
+    <string name="drawer_search_title">Рядок пошуку в меню додатків</string>
+    <string name="drawer_search_summary">Показувати рядок пошуку у верхній частині меню додатків</string>
+    <string name="allow_wallpaper_scrolling">Прокручування шпалер</string>
+    <string name="allow_wallpaper_scrolling_summary">Прокручувати шпалери між сторінками головного екрана</string>
+    <string name="allow_wallpaper_zooming">Масштабування шпалер</string>
+    <string name="allow_wallpaper_zooming_summary">Масштабувати шпалери під час відкриття меню додатків або нещодавніх додатків</string>
+    <string name="show_statusbar_title">Рядок стану</string>
+    <string name="show_top_shadow">Верхня тінь</string>
+    <string name="meminfo_text">%1$s доступно | %2$s</string>
+    <string name="recents_meminfo_title">Відомості про пам’ять</string>
+    <string name="recents_meminfo_zram_title">Відомості про ZRAM</string>
+    <string name="recents_screenshot_title">Знімок екрана</string>
+    <string name="recents_clear_all_title">Очистити все</string>
+    <string name="recents_lens_title">Lens</string>
+    <string name="recents_style_title">Стиль нещодавніх додатків</string>
+    <string name="short_parallax_title">Повний паралакс за малої кількості сторінок</string>
+    <string name="short_parallax_summary">Використовувати повне прокручування шпалер, навіть якщо на головному екрані мало сторінок</string>
+    <string name="single_page_center_title">Центрувати шпалери на одній сторінці</string>
+    <string name="single_page_center_summary">Центрувати шпалери, якщо використовується лише одна сторінка головного екрана</string>
+    <string name="drawer_scrollbar_title">Смуга прокручування</string>
+    <string name="drawer_scrollbar_summary">Показувати смугу прокручування збоку в меню додатків</string>
+    <string name="perf_dark_status_bar_title">Темний рядок стану</string>
+    <string name="perf_dark_status_bar_summary">Завжди використовувати темний рядок стану на головному екрані</string>
+    <string name="app_library_title">Бібліотека додатків</string>
+    <string name="app_library_search_hint">Бібліотека додатків</string>
+    <string name="app_library_search_cancel">Скасувати</string>
+    <string name="app_library_search_clear">Очистити пошук</string>
+    <string name="pref_app_library_title">Бібліотека додатків</string>
+    <string name="pref_app_library_summary">Показувати бібліотеку додатків у стилі iOS із поділом за категоріями</string>
+    <string name="pref_app_library_single_page_title">Одна сторінка головного екрана</string>
+    <string name="pref_app_library_single_page_summary">Залишити одну сторінку головного екрана й відкривати бібліотеку додатків одним свайпом</string>
+    <string name="app_category_suggestions">Пропозиції</string>
+    <string name="app_category_recently_added">Нещодавно додані</string>
+    <string name="app_category_social">Соціальні мережі</string>
+    <string name="app_category_communication">Спілкування</string>
+    <string name="app_category_productivity">Продуктивність</string>
+    <string name="app_category_finance">Фінанси</string>
+    <string name="app_category_shopping">Покупки</string>
+    <string name="app_category_entertainment">Розваги</string>
+    <string name="app_category_games">Ігри</string>
+    <string name="app_category_photography">Фотографія</string>
+    <string name="app_category_video">Відео</string>
+    <string name="app_category_music">Музика</string>
+    <string name="app_category_travel">Подорожі</string>
+    <string name="app_category_navigation">Навігація</string>
+    <string name="app_category_education">Освіта</string>
+    <string name="app_category_health_fitness">Здоров’я та фітнес</string>
+    <string name="app_category_utilities">Утиліти</string>
+    <string name="app_category_tools">Інструменти</string>
+    <string name="app_category_lifestyle">Спосіб життя</string>
+    <string name="app_category_news">Новини</string>
+    <string name="app_category_books">Книги</string>
+    <string name="app_category_food">Їжа</string>
+    <string name="app_category_other">Інше</string>
+    <string name="search_bar_category_title">Рядок пошуку</string>
+    <string name="label_search">Пошук</string>
+    <string name="label_lens">Google Lens</string>
+    <string name="label_voice_search">Голосовий пошук</string>
+    <string name="label_ai_mode">Режим ШІ</string>
+    <string name="ai_mode_not_available">Функції ШІ недоступні</string>
+    <string name="label_gemini_search">Режим ШІ</string>
+    <string name="dock_music_search_title">Пошук музики</string>
+    <string name="dock_music_search_summary">Запускати пошук музики після натискання значка мікрофона</string>
+    <string name="dock_search_title">Рядок пошуку</string>
+    <string name="dock_search_summary">Рядок пошуку в док-панелі</string>
+    <string name="dock_theme_title">Тематичні значки</string>
+    <string name="dock_theme_summary">Використовувати тематичні значки в рядку пошуку</string>
+    <string name="search_radius_title">Радіус заокруглення</string>
+    <string name="stroke_width_title">Товщина контуру</string>
+    <string name="hotseat_qsb_height_title">Висота рядка пошуку</string>
+    <string name="hotseat_qsb_height_summary">Використовувати повну висоту рядка пошуку замість висоти значків</string>
+    <string name="qsb_style_google_title">Рядок пошуку в стилі Google</string>
+    <string name="qsb_style_google_summary">Використовувати оформлення в стилі Google з кнопками ШІ та Lens</string>
+    <string name="pixel_qsb_bg_opacity_title">Непрозорість рядка пошуку в стилі Google</string>
+    <string name="pixel_qsb_bg_opacity_summary">Налаштувати прозорість фону рядка пошуку в стилі Google</string>
+
+    <string-array name="recents_style_entries">
+        <item>За замовчуванням</item>
+        <item>Сітка One UI</item>
+        <item>Стос Mistify</item>
+        <item>iOS</item>
+        <item>Горизонтальний список</item>
+    </string-array>
+</resources>

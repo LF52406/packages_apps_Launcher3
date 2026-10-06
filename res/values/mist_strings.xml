@@ -22,67 +22,67 @@
 
     <string name="settings_title">Home settings</string>
     <string name="home_category_title">Home screen</string>
-    <string name="home_category_summary">Set Google now panel and more</string>
+    <string name="home_category_summary">Customize Home screen behavior and layout</string>
     <string name="icons_category_title">Icons</string>
-    <string name="icons_category_summary">Set icon size and more</string>
+    <string name="icons_category_summary">Customize icon size and appearance</string>
     <string name="app_drawer_category_title">App drawer</string>
-    <string name="app_drawer_category_summary">Customize your app drawer</string>
+    <string name="app_drawer_category_summary">Customize the app drawer</string>
     <string name="recents_category_title">Recents</string>
-    <string name="recents_category_summary">Revamp the overview screen</string>
+    <string name="recents_category_summary">Customize the Recents screen</string>
     <string name="misc_category_title">Miscellaneous</string>
-    <string name="misc_category_summary">Other options</string>
+    <string name="misc_category_summary">Other launcher options</string>
     <string name="general_category_title">General</string>
     <string name="interface_category_title">Interface</string>
     <string name="actions_category_title">Quick actions</string>
 
     <!-- Settings title to show Google Now at -1 screen on launcher. [CHAR LIMIT=50] -->
-    <string name="title_show_google_app">Swipe to access Google app</string>
+    <string name="title_show_google_app">Swipe to access the Google app</string>
     <string name="pref_show_google_now_summary" translatable="false">@string/msg_minus_one_on_left</string>
     <!-- Settings message explaining when the -1 screen is available on an LTR device. [CHAR LIMIT=100] -->
-    <string name="msg_minus_one_on_left">When you swipe right from main home screen</string>
+    <string name="msg_minus_one_on_left">Swipe right from the main Home screen</string>
     <!-- Settings message explaining when the -1 screen is available on an RTL device. [CHAR LIMIT=100] -->
-    <string name="msg_minus_one_on_right">When you swipe left from main home screen</string>
+    <string name="msg_minus_one_on_right">Swipe left from the main Home screen</string>
 
     <!-- Suggestions -->
     <string name="suggestion_pref_screen_title">Suggestions</string>
-    <string name="suggestion_pref_screen_desc">For All Apps &amp; Home screen suggestions</string>
+    <string name="suggestion_pref_screen_desc">Show suggestions in All Apps and on the Home screen</string>
 
     <!-- Restart launcher -->
     <string name="pref_restart_title">Restart</string>
-    <string name="pref_restart_summary">Restart the launcher manually to apply any pending settings</string>
-    <string name="restarting_launcher">Restarting launcher...</string>
-    <string name="restarting_launcher_changes">Restarting launcher to apply changes...</string>
-    <string name="updating_launcher_components">Restarting launcher to update launcher components...</string>
+    <string name="pref_restart_summary">Restart the launcher to apply pending changes</string>
+    <string name="restarting_launcher">Restarting launcher\u2026</string>
+    <string name="restarting_launcher_changes">Restarting launcher to apply changes\u2026</string>
+    <string name="updating_launcher_components">Restarting launcher to update components\u2026</string>
 
     <!-- DT2S -->
-    <string name="pref_sleep_gesture_title">Double tap to sleep</string>
-    <string name="pref_sleep_gesture_summary">Double tap empty space on home screen to turn off the screen</string>
-    <string name="pref_sleep_gesture_haptic_title">Vibrate on double tap to sleep</string>
-    <string name="pref_sleep_gesture_haptic_summary">Provide haptic feedback on double tap to sleep gesture</string>
+    <string name="pref_sleep_gesture_title">Double tap to turn off screen</string>
+    <string name="pref_sleep_gesture_summary">Double-tap an empty area of the Home screen to turn off the screen</string>
+    <string name="pref_sleep_gesture_haptic_title">Vibrate on double tap</string>
+    <string name="pref_sleep_gesture_haptic_summary">Provide haptic feedback when double tapping to turn off the screen</string>
 
     <!-- Edit workspace -->
-    <string name="settings_lock_layout_title">Lock layout</string>
-    <string name="settings_lock_layout_summary_on">Icons and widgets can\'t be added, removed and moved on the homescreen</string>
-    <string name="settings_lock_layout_summary_off">Icons and widgets can be added, removed and moved on the homescreen</string>
-    <string name="settings_edit_widgets_error">It\'s not possible to add widgets to the home screen</string>
+    <string name="settings_lock_layout_title">Lock Home screen layout</string>
+    <string name="settings_lock_layout_summary_on">Icons and widgets can\'t be added, removed, or moved on the Home screen</string>
+    <string name="settings_lock_layout_summary_off">Icons and widgets can be added, removed, and moved on the Home screen</string>
+    <string name="settings_edit_widgets_error">Widgets can\'t be added to the Home screen</string>
 
     <!-- All apps themed icons -->
-    <string name="pref_themed_icons_title">Use themed icons in drawer</string>
-    <string name="pref_themed_icons_summary">Follow themed icons used on home screen</string>
+    <string name="pref_themed_icons_title">Themed icons in app drawer</string>
+    <string name="pref_themed_icons_summary">Match app drawer icons to themed icons on the Home screen</string>
 
     <!-- Hide labels -->
-    <string name="desktop_show_labels">Show icon labels on desktop</string>
-    <string name="drawer_show_labels">Show icon labels in drawer</string>
+    <string name="desktop_show_labels">Show icon labels on Home screen</string>
+    <string name="drawer_show_labels">Show icon labels in app drawer</string>
 
     <!-- Trust apps -->
-    <string name="trust_apps_manager_name">Hidden &amp; Protected apps</string>
-    <string name="trust_apps_auth_manager">Unlock to manage the hidden and protected apps</string>
+    <string name="trust_apps_manager_name">Hidden &amp; protected apps</string>
+    <string name="trust_apps_auth_manager">Unlock to manage hidden and protected apps</string>
     <string name="trust_apps_auth_open_app">Authenticate to open %1$s</string>
     <string name="trust_apps_loading">Loading\u2026</string>
-    <string name="trust_apps_no_lock_error">Please set up a secure lock screen to restrict app access</string>
+    <string name="trust_apps_no_lock_error">Set up a secure screen lock to restrict access to apps</string>
     <string name="trust_apps_help">Help</string>
-    <string name="trust_apps_info_hidden">Hidden apps and their widgets are hidden from the drawer</string>
-    <string name="trust_apps_info_protected">Protected apps require authentication to be opened from the launcher</string>
+    <string name="trust_apps_info_hidden">Hidden apps and their widgets are not shown in the app drawer</string>
+    <string name="trust_apps_info_protected">Protected apps require authentication when opened from the launcher</string>
 
     <!-- Icon size -->
     <string name="icon_size_title">Icon size</string>
@@ -93,13 +93,13 @@
     <!-- Pause apps shortcut -->
     <string name="pause">Pause</string>
     <string name="pause_apps_dialog_title">Pause %1$s?</string>
-    <string name="pause_apps_dialog_message">Notifications for %1$s will be paused</string>
+    <string name="pause_apps_dialog_message">Notifications from %1$s will be paused</string>
     <string name="paused_apps_dialog_title">App paused</string>
-    <string name="paused_apps_dialog_message">%1$s was directly paused from the launcher</string>
+    <string name="paused_apps_dialog_message">%1$s was paused from the launcher</string>
     <string name="paused_apps_drop_target_label">Pause app</string>
 
     <!-- App label -->
-    <string name="icon_two_lines_title">Use two lines for app label</string>
+    <string name="icon_two_lines_title">Use two lines for app labels</string>
 
     <!-- Kill App recents action shortcut -->
     <string name="recent_task_option_kill_app">Kill</string>
@@ -109,30 +109,30 @@
     <string name="row_height_title">Row height</string>
 
     <!-- Hotseat Background -->
-    <string name="hotseat_bg_title">Hotseat background</string>
-    <string name="hotseat_bg_summary">Add translucent background to the app dock</string>
+    <string name="hotseat_bg_title">Dock background</string>
+    <string name="hotseat_bg_summary">Add a translucent background to the dock</string>
 
     <!-- Background opacity -->
     <string name="background_opacity_title">Background opacity</string>
 
     <!-- Search bar -->
     <string name="pref_show_hotseat_qsb_title">Show search bar</string>
-    <string name="pref_show_hotseat_qsb_summary">At the bottom of your home screen</string>
+    <string name="pref_show_hotseat_qsb_summary">Show it at the bottom of the Home screen</string>
 
     <!-- App drawer searchbar -->
-    <string name="drawer_search_title">App search bar</string>
-    <string name="drawer_search_summary">Search bar on top of the app drawer</string>
+    <string name="drawer_search_title">App drawer search bar</string>
+    <string name="drawer_search_summary">Show a search bar at the top of the app drawer</string>
 
     <!-- Wallpaper scrolling -->
     <string name="allow_wallpaper_scrolling">Wallpaper scrolling</string>
-    <string name="allow_wallpaper_scrolling_summary">Wallpaper scrolling effect for multiple screens</string>
+    <string name="allow_wallpaper_scrolling_summary">Scroll the wallpaper across Home screen pages</string>
 
     <!-- Wallpaper zooming -->
     <string name="allow_wallpaper_zooming">Wallpaper zooming</string>
-    <string name="allow_wallpaper_zooming_summary">Zoom in or out the wallpaper when using drawer or recent apps</string>
+    <string name="allow_wallpaper_zooming_summary">Zoom the wallpaper when opening the app drawer or Recents</string>
 
     <!-- Homescreen Statusbar -->
-    <string name="show_statusbar_title">Status Bar</string>
+    <string name="show_statusbar_title">Status bar</string>
 
     <!-- Top shadow -->
     <string name="show_top_shadow">Top shadow</string>
@@ -156,7 +156,7 @@
         <item>iOS</item>
         <item>Horizontal</item>
     </string-array>
-    <string-array name="recents_style_values">
+    <string-array name="recents_style_values" translatable="false">
         <item>default</item>
         <item>oneui_grid</item>
         <item>oneui_stack</item>
@@ -165,30 +165,30 @@
     </string-array>
 
     <!-- Parallax -->
-    <string name="short_parallax_title">Allow short parallax</string>
-    <string name="short_parallax_summary">Enable full wallpaper scroll effect on smaller numbers of pages instead of cropping the wallpaper</string>
-    <string name="single_page_center_title">Single page center</string>
-    <string name="single_page_center_summary">Center wallpaper if only using a single page</string>
+    <string name="short_parallax_title">Full parallax with few pages</string>
+    <string name="short_parallax_summary">Use full wallpaper scrolling even when the Home screen has only a few pages</string>
+    <string name="single_page_center_title">Center wallpaper on a single page</string>
+    <string name="single_page_center_summary">Center the wallpaper when only one Home screen page is used</string>
 
     <!-- App drawer scrollbar -->
     <string name="drawer_scrollbar_title">Scrollbar</string>
-    <string name="drawer_scrollbar_summary">Scrollbar on side of the app drawer</string>
+    <string name="drawer_scrollbar_summary">Show a scrollbar on the side of the app drawer</string>
 
     <!-- Dark Status Bar -->
     <string name="perf_dark_status_bar_title">Dark status bar</string>
-    <string name="perf_dark_status_bar_summary">Always use dark status bar on home screen</string>
+    <string name="perf_dark_status_bar_summary">Always use a dark status bar on the Home screen</string>
 
-    <string name="app_library_title">App Library</string>
-    <string name="app_library_search_hint">App Library</string>
+    <string name="app_library_title">App library</string>
+    <string name="app_library_search_hint">App library</string>
     <string name="app_library_search_cancel">Cancel</string>
     <string name="app_library_search_clear">Clear search</string>
-    <string name="pref_app_library_title">App Library</string>
-    <string name="pref_app_library_summary">Show an iOS-style categorized application library</string>
-    <string name="pref_app_library_single_page_title">Single Home Page Mode</string>
-    <string name="pref_app_library_single_page_summary">Keep only one home screen and access App Library with one swipe</string>
+    <string name="pref_app_library_title">App library</string>
+    <string name="pref_app_library_summary">Show an iOS-style app library organized by category</string>
+    <string name="pref_app_library_single_page_title">Single Home screen page</string>
+    <string name="pref_app_library_single_page_summary">Keep one Home screen page and open the App library with one swipe</string>
 
     <string name="app_category_suggestions">Suggestions</string>
-    <string name="app_category_recently_added">Recently Added</string>
+    <string name="app_category_recently_added">Recently added</string>
     <string name="app_category_social">Social</string>
     <string name="app_category_communication">Communication</string>
     <string name="app_category_productivity">Productivity</string>
@@ -202,7 +202,7 @@
     <string name="app_category_travel">Travel</string>
     <string name="app_category_navigation">Navigation</string>
     <string name="app_category_education">Education</string>
-    <string name="app_category_health_fitness">Health &amp; Fitness</string>
+    <string name="app_category_health_fitness">Health &amp; fitness</string>
     <string name="app_category_utilities">Utilities</string>
     <string name="app_category_tools">Tools</string>
     <string name="app_category_lifestyle">Lifestyle</string>
@@ -216,21 +216,21 @@
     <string name="label_search">Search</string>
     <string name="label_lens">Google Lens</string>
     <string name="label_voice_search">Voice search</string>
-    <string name="label_ai_mode">AI Mode</string>
-    <string name="ai_mode_not_available">AI functionality not available</string>
+    <string name="label_ai_mode">AI mode</string>
+    <string name="ai_mode_not_available">AI functionality is unavailable</string>
     <string name="label_gemini_search">AI mode</string>
     <string name="dock_music_search_title">Music search</string>
-    <string name="dock_music_search_summary">Start music search on pressing mic icon</string>
+    <string name="dock_music_search_summary">Start music search when pressing the microphone icon</string>
     <string name="dock_search_title">Search bar</string>
-    <string name="dock_search_summary">Search bar in the bottom dock</string>
+    <string name="dock_search_summary">Search bar in the dock</string>
     <string name="dock_theme_title">Themed icons</string>
-    <string name="dock_theme_summary">Use themed icons for search bar</string>
+    <string name="dock_theme_summary">Use themed icons in the search bar</string>
     <string name="search_radius_title">Corner radius</string>
-    <string name="stroke_width_title">Stroke</string>
-    <string name="hotseat_qsb_height_title">QSB height</string>
-    <string name="hotseat_qsb_height_summary">Use full QSB height instead of icon height</string>
+    <string name="stroke_width_title">Outline width</string>
+    <string name="hotseat_qsb_height_title">Search bar height</string>
+    <string name="hotseat_qsb_height_summary">Use the full search bar height instead of icon height</string>
     <string name="qsb_style_google_title">Google-style search bar</string>
-    <string name="qsb_style_google_summary">Use the QSB design with AI and Lens buttons</string>
-    <string name="pixel_qsb_bg_opacity_title">Pixel QSB background opacity</string>
-    <string name="pixel_qsb_bg_opacity_summary">Transparency of the Google-style search bar background</string>
+    <string name="qsb_style_google_summary">Use the Google-style layout with AI and Lens buttons</string>
+    <string name="pixel_qsb_bg_opacity_title">Google-style search bar opacity</string>
+    <string name="pixel_qsb_bg_opacity_summary">Adjust the background transparency of the Google-style search bar</string>
 </resources>

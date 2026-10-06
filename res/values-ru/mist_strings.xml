@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+     Copyright (C) 2026 MistOS Project
+
+     Licensed under the Apache License, Version 2.0 (the "License");
+     you may not use this file except in compliance with the License.
+     You may obtain a copy of the License at
+
+          http://www.apache.org/licenses/LICENSE-2.0
+
+     Unless required by applicable law or agreed to in writing, software
+     distributed under the License is distributed on an "AS IS" BASIS,
+     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+     See the License for the specific language governing permissions and
+     limitations under the License.
+-->
+<resources>
+    <string name="settings_title">Настройки главного экрана</string>
+    <string name="home_category_title">Главный экран</string>
+    <string name="home_category_summary">Настройка поведения и макета главного экрана</string>
+    <string name="icons_category_title">Значки</string>
+    <string name="icons_category_summary">Настройка размера и внешнего вида значков</string>
+    <string name="app_drawer_category_title">Меню приложений</string>
+    <string name="app_drawer_category_summary">Настройка меню приложений</string>
+    <string name="recents_category_title">Недавние приложения</string>
+    <string name="recents_category_summary">Настройка экрана недавних приложений</string>
+    <string name="misc_category_title">Прочее</string>
+    <string name="misc_category_summary">Другие параметры лаунчера</string>
+    <string name="general_category_title">Общие</string>
+    <string name="interface_category_title">Интерфейс</string>
+    <string name="actions_category_title">Быстрые действия</string>
+    <string name="title_show_google_app">Доступ к приложению Google свайпом</string>
+    <string name="msg_minus_one_on_left">Проведите вправо от главного экрана</string>
+    <string name="msg_minus_one_on_right">Проведите влево от главного экрана</string>
+    <string name="suggestion_pref_screen_title">Рекомендации</string>
+    <string name="suggestion_pref_screen_desc">Рекомендации в меню приложений и на главном экране</string>
+    <string name="pref_restart_title">Перезапустить</string>
+    <string name="pref_restart_summary">Перезапустить лаунчер, чтобы применить ожидающие изменения</string>
+    <string name="restarting_launcher">Перезапуск лаунчера\u2026</string>
+    <string name="restarting_launcher_changes">Перезапуск лаунчера для применения изменений\u2026</string>
+    <string name="updating_launcher_components">Перезапуск лаунчера для обновления компонентов\u2026</string>
+    <string name="pref_sleep_gesture_title">Двойное нажатие для выключения экрана</string>
+    <string name="pref_sleep_gesture_summary">Дважды нажмите на свободное место главного экрана, чтобы выключить экран</string>
+    <string name="pref_sleep_gesture_haptic_title">Вибрация при двойном нажатии</string>
+    <string name="pref_sleep_gesture_haptic_summary">Вибрировать при двойном нажатии для выключения экрана</string>
+    <string name="settings_lock_layout_title">Блокировка макета главного экрана</string>
+    <string name="settings_lock_layout_summary_on">Значки и виджеты нельзя добавлять, удалять или перемещать на главном экране</string>
+    <string name="settings_lock_layout_summary_off">Значки и виджеты можно добавлять, удалять и перемещать на главном экране</string>
+    <string name="settings_edit_widgets_error">Невозможно добавить виджет на главный экран</string>
+    <string name="pref_themed_icons_title">Тематические значки в меню приложений</string>
+    <string name="pref_themed_icons_summary">Использовать в меню приложений те же тематические значки, что и на главном экране</string>
+    <string name="desktop_show_labels">Показывать подписи значков на главном экране</string>
+    <string name="drawer_show_labels">Показывать подписи значков в меню приложений</string>
+    <string name="trust_apps_manager_name">Скрытые и защищённые приложения</string>
+    <string name="trust_apps_auth_manager">Разблокируйте устройство, чтобы управлять скрытыми и защищёнными приложениями</string>
+    <string name="trust_apps_auth_open_app">Подтвердите личность, чтобы открыть %1$s</string>
+    <string name="trust_apps_loading">Загрузка\u2026</string>
+    <string name="trust_apps_no_lock_error">Настройте безопасную блокировку экрана, чтобы ограничить доступ к приложениям</string>
+    <string name="trust_apps_help">Справка</string>
+    <string name="trust_apps_info_hidden">Скрытые приложения и их виджеты не отображаются в меню приложений</string>
+    <string name="trust_apps_info_protected">Для запуска защищённых приложений из лаунчера требуется подтверждение личности</string>
+    <string name="icon_size_title">Размер значков</string>
+    <string name="font_size_title">Размер шрифта</string>
+    <string name="pause">Приостановить</string>
+    <string name="pause_apps_dialog_title">Приостановить %1$s?</string>
+    <string name="pause_apps_dialog_message">Уведомления от %1$s будут приостановлены</string>
+    <string name="paused_apps_dialog_title">Приложение приостановлено</string>
+    <string name="paused_apps_dialog_message">Приложение %1$s приостановлено через лаунчер</string>
+    <string name="paused_apps_drop_target_label">Приостановить приложение</string>
+    <string name="icon_two_lines_title">Две строки для названий приложений</string>
+    <string name="recent_task_option_kill_app">Завершить</string>
+    <string name="recents_app_killed">Приложение завершено</string>
+    <string name="row_height_title">Высота строки</string>
+    <string name="hotseat_bg_title">Фон док-панели</string>
+    <string name="hotseat_bg_summary">Добавить полупрозрачный фон в док-панель</string>
+    <string name="background_opacity_title">Непрозрачность фона</string>
+    <string name="pref_show_hotseat_qsb_title">Показывать строку поиска</string>
+    <string name="pref_show_hotseat_qsb_summary">В нижней части главного экрана</string>
+    <string name="drawer_search_title">Строка поиска в меню приложений</string>
+    <string name="drawer_search_summary">Показывать строку поиска в верхней части меню приложений</string>
+    <string name="allow_wallpaper_scrolling">Прокрутка обоев</string>
+    <string name="allow_wallpaper_scrolling_summary">Прокручивать обои между страницами главного экрана</string>
+    <string name="allow_wallpaper_zooming">Масштабирование обоев</string>
+    <string name="allow_wallpaper_zooming_summary">Масштабировать обои при открытии меню приложений или недавних приложений</string>
+    <string name="show_statusbar_title">Строка состояния</string>
+    <string name="show_top_shadow">Верхняя тень</string>
+    <string name="meminfo_text">%1$s доступно | %2$s</string>
+    <string name="recents_meminfo_title">Сведения о памяти</string>
+    <string name="recents_meminfo_zram_title">Сведения о ZRAM</string>
+    <string name="recents_screenshot_title">Снимок экрана</string>
+    <string name="recents_clear_all_title">Очистить всё</string>
+    <string name="recents_lens_title">Lens</string>
+    <string name="recents_style_title">Стиль недавних приложений</string>
+    <string name="short_parallax_title">Полный параллакс при малом числе страниц</string>
+    <string name="short_parallax_summary">Использовать полную прокрутку обоев, даже если на главном экране мало страниц</string>
+    <string name="single_page_center_title">Центрировать обои на одной странице</string>
+    <string name="single_page_center_summary">Центрировать обои, если используется только одна страница главного экрана</string>
+    <string name="drawer_scrollbar_title">Полоса прокрутки</string>
+    <string name="drawer_scrollbar_summary">Показывать полосу прокрутки сбоку в меню приложений</string>
+    <string name="perf_dark_status_bar_title">Тёмная строка состояния</string>
+    <string name="perf_dark_status_bar_summary">Всегда использовать тёмную строку состояния на главном экране</string>
+    <string name="app_library_title">Библиотека приложений</string>
+    <string name="app_library_search_hint">Библиотека приложений</string>
+    <string name="app_library_search_cancel">Отмена</string>
+    <string name="app_library_search_clear">Очистить поиск</string>
+    <string name="pref_app_library_title">Библиотека приложений</string>
+    <string name="pref_app_library_summary">Показывать библиотеку приложений в стиле iOS с разделением по категориям</string>
+    <string name="pref_app_library_single_page_title">Одна страница главного экрана</string>
+    <string name="pref_app_library_single_page_summary">Оставить одну страницу главного экрана и открывать библиотеку приложений одним свайпом</string>
+    <string name="app_category_suggestions">Рекомендации</string>
+    <string name="app_category_recently_added">Недавно добавленные</string>
+    <string name="app_category_social">Социальные сети</string>
+    <string name="app_category_communication">Общение</string>
+    <string name="app_category_productivity">Продуктивность</string>
+    <string name="app_category_finance">Финансы</string>
+    <string name="app_category_shopping">Покупки</string>
+    <string name="app_category_entertainment">Развлечения</string>
+    <string name="app_category_games">Игры</string>
+    <string name="app_category_photography">Фотография</string>
+    <string name="app_category_video">Видео</string>
+    <string name="app_category_music">Музыка</string>
+    <string name="app_category_travel">Путешествия</string>
+    <string name="app_category_navigation">Навигация</string>
+    <string name="app_category_education">Образование</string>
+    <string name="app_category_health_fitness">Здоровье и фитнес</string>
+    <string name="app_category_utilities">Утилиты</string>
+    <string name="app_category_tools">Инструменты</string>
+    <string name="app_category_lifestyle">Образ жизни</string>
+    <string name="app_category_news">Новости</string>
+    <string name="app_category_books">Книги</string>
+    <string name="app_category_food">Еда</string>
+    <string name="app_category_other">Другое</string>
+    <string name="search_bar_category_title">Строка поиска</string>
+    <string name="label_search">Поиск</string>
+    <string name="label_lens">Google Lens</string>
+    <string name="label_voice_search">Голосовой поиск</string>
+    <string name="label_ai_mode">Режим ИИ</string>
+    <string name="ai_mode_not_available">Функции ИИ недоступны</string>
+    <string name="label_gemini_search">Режим ИИ</string>
+    <string name="dock_music_search_title">Поиск музыки</string>
+    <string name="dock_music_search_summary">Запускать поиск музыки при нажатии на значок микрофона</string>
+    <string name="dock_search_title">Строка поиска</string>
+    <string name="dock_search_summary">Строка поиска в док-панели</string>
+    <string name="dock_theme_title">Тематические значки</string>
+    <string name="dock_theme_summary">Использовать тематические значки в строке поиска</string>
+    <string name="search_radius_title">Радиус скругления</string>
+    <string name="stroke_width_title">Толщина контура</string>
+    <string name="hotseat_qsb_height_title">Высота строки поиска</string>
+    <string name="hotseat_qsb_height_summary">Использовать полную высоту строки поиска вместо высоты значков</string>
+    <string name="qsb_style_google_title">Строка поиска в стиле Google</string>
+    <string name="qsb_style_google_summary">Использовать оформление в стиле Google с кнопками ИИ и Lens</string>
+    <string name="pixel_qsb_bg_opacity_title">Непрозрачность строки поиска в стиле Google</string>
+    <string name="pixel_qsb_bg_opacity_summary">Настроить прозрачность фона строки поиска в стиле Google</string>
+
+    <string-array name="recents_style_entries">
+        <item>По умолчанию</item>
+        <item>Сетка One UI</item>
+        <item>Стопка Mistify</item>
+        <item>iOS</item>
+        <item>Горизонтальный список</item>
+    </string-array>
+</resources>
