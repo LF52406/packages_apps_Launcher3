@@ -29,8 +29,8 @@ import android.util.Log
 import android.view.View
 import android.widget.RemoteViews
 import androidx.annotation.VisibleForTesting
-import androidx.core.net.toUri
 import com.android.launcher3.BubbleTextView
+import com.android.launcher3.Launcher
 import com.android.launcher3.LauncherSettings.Favorites
 import com.android.launcher3.R
 import com.android.launcher3.allapps.AllAppsStore
@@ -151,9 +151,17 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
                         title,
                         null,
                     )
-                    // Since we don't have a valid appInfo, just open the default browser
-                    // Set the data to a blank page uri
-                    view.setOnClickIntent(Intent(Intent.ACTION_VIEW).setData("http://".toUri()))
+                    // No external search provider is available. Keep the workspace search
+                    // widget useful by opening Launcher's built-in app search instead.
+                    if (activityContext is Launcher) {
+                        view.setOnClickListener { activityContext.toggleAllApps(true) }
+                    } else {
+                        view.setOnClickIntent(
+                            Intent(Intent.ACTION_ALL_APPS)
+                                .setClass(context, Launcher::class.java)
+                                .addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                        )
+                    }
                 } else {
                     appInfo.title = title
                     view.applyFromApplicationInfo(appInfo)
