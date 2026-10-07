@@ -122,7 +122,7 @@
     <string name="label_voice_search">Hlasové vyhľadávanie</string>
     <string name="label_ai_mode">Režim AI</string>
     <string name="ai_mode_not_available">Funkcie AI nie sú dostupné</string>
-    <string name="label_gemini_search">AI mode</string>
+    <string name="label_gemini_search">Režim AI</string>
     <string name="dock_music_search_title">Vyhľadávanie hudby</string>
     <string name="dock_music_search_summary">Stlačením ikony mikrofónu spustite vyhľadávanie hudby</string>
     <string name="dock_search_title">Vyhľadávací panel Google</string>
