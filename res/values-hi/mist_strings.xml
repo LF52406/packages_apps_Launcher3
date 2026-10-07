@@ -70,7 +70,7 @@
     <string name="allow_wallpaper_zooming_summary">ऐप ड्रॉअर या हाल के ऐप्स खोलते समय वॉलपेपर ज़ूम करें</string>
     <string name="show_statusbar_title">स्थिति पट्टी</string>
     <string name="show_top_shadow">ऊपरी छाया</string>
-    <string name="meminfo_text">%1$s available | %2$s</string>
+    <string name="meminfo_text">%1$s उपलब्ध | %2$s</string>
     <string name="recents_meminfo_title">मेमोरी जानकारी</string>
     <string name="recents_meminfo_zram_title">ZRAM जानकारी</string>
     <string name="recents_screenshot_title">स्क्रीनशॉट</string>
