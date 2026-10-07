@@ -27,8 +27,8 @@
     <string name="updating_launcher_components">Reiniciando o launcher para atualizar seus componentes...</string>
     <string name="pref_sleep_gesture_title">Toque duplo para desligar</string>
     <string name="pref_sleep_gesture_summary">Toque duas vezes no espaço vazio da tela inicial para desligar a tela</string>
-    <string name="pref_sleep_gesture_haptic_title">Vibrate on double tap to sleep</string>
-    <string name="pref_sleep_gesture_haptic_summary">Provide haptic feedback on double tap to sleep gesture</string>
+    <string name="pref_sleep_gesture_haptic_title">Vibrar ao tocar duas vezes</string>
+    <string name="pref_sleep_gesture_haptic_summary">Fornecer feedback tátil ao tocar duas vezes para desligar a tela</string>
     <string name="settings_lock_layout_title">Bloquear layout</string>
     <string name="settings_lock_layout_summary_on">Ícones e widgets não podem ser adicionados, removidos ou movidos da tela inicial</string>
     <string name="settings_lock_layout_summary_off">Ícones e widgets podem ser adicionados, removidos e movidos na tela inicial</string>
@@ -62,7 +62,7 @@
     <string name="background_opacity_title">Opacidade do fundo</string>
     <string name="pref_show_hotseat_qsb_title">Mostrar barra de pesquisa</string>
     <string name="pref_show_hotseat_qsb_summary">Na parte inferior da tela inicial</string>
-    <string name="drawer_search_title">App search bar location</string>
+    <string name="drawer_search_title">Barra de pesquisa da gaveta de apps</string>
     <string name="drawer_search_summary">Mostrar uma barra de pesquisa na parte superior da gaveta de apps</string>
     <string name="allow_wallpaper_scrolling">Rolagem do papel de parede</string>
     <string name="allow_wallpaper_scrolling_summary">Rolar papel de parede ao alternar entre as telas</string>

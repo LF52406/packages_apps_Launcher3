@@ -57,7 +57,7 @@
     <string name="recent_task_option_kill_app">Paksa berhenti</string>
     <string name="recents_app_killed">Aplikasi dihentikan paksa</string>
     <string name="row_height_title">Tinggi baris</string>
-    <string name="hotseat_bg_title">Latar belakang hotseat</string>
+    <string name="hotseat_bg_title">Latar belakang dok</string>
     <string name="hotseat_bg_summary">Tambahkan latar belakang tembus pandang di dok aplikasi</string>
     <string name="background_opacity_title">Transparansi latar Belakang</string>
     <string name="pref_show_hotseat_qsb_title">Tampilkan bilah pencarian</string>
