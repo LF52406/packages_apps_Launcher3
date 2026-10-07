@@ -57,7 +57,7 @@
     <string name="recent_task_option_kill_app">Zorla durdur</string>
     <string name="recents_app_killed">Uygulama zorla durduruldu</string>
     <string name="row_height_title">Satır yüksekliği</string>
-    <string name="hotseat_bg_title">Hotseat arka planı</string>
+    <string name="hotseat_bg_title">Alt çubuk arka planı</string>
     <string name="hotseat_bg_summary">Uygulama yuvasına yarı şeffaf bir arka plan ekleyin</string>
     <string name="background_opacity_title">Arka plan şeffaflığı</string>
     <string name="pref_show_hotseat_qsb_title">Arama çubuğunu göster</string>
