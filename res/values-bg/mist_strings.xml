@@ -3,7 +3,7 @@
 <resources>
     <string name="settings_title">Настройки за началния екран</string>
     <string name="home_category_title">Начален екран</string>
-    <string name="home_category_summary">Приложи Google now панела и още</string>
+    <string name="home_category_summary">Персонализиране на поведението и оформлението на началния екран</string>
     <string name="icons_category_title">Икони</string>
     <string name="icons_category_summary">Задай размер на икона и още</string>
     <string name="app_drawer_category_title">Списък с приложения</string>
@@ -23,7 +23,7 @@
     <string name="pref_restart_title">Рестартиране</string>
     <string name="pref_restart_summary">Рестартирай launcher-а ръчно, за да приложиш всички чакащи настройки</string>
     <string name="restarting_launcher">Рестартиране на launcher-а...</string>
-    <string name="restarting_launcher_changes">Рестартиране на launcher-a за прилагане на промените...</string>
+    <string name="restarting_launcher_changes">Рестартиране на лаунчера за прилагане на промените\u2026</string>
     <string name="updating_launcher_components">Рестартиране на launcher-а за обновение на зомпоненти...</string>
     <string name="pref_sleep_gesture_title">Двукратно почукване за заспиване</string>
     <string name="pref_sleep_gesture_summary">Направи двоен натиск при празно място на екрана, за да се изключи екранът</string>

@@ -27,8 +27,8 @@
     <string name="updating_launcher_components">הפעלה מחדש של הלאונצ\'ר לעדכון רכיבי הלאונצ\'ר...</string>
     <string name="pref_sleep_gesture_title">הקשה כפולה לכיבוי המסך</string>
     <string name="pref_sleep_gesture_summary">הקשה כפולה על שטח ריק במסך הבית כדי לכבות את המסך</string>
-    <string name="pref_sleep_gesture_haptic_title">Vibrate on double tap to sleep</string>
-    <string name="pref_sleep_gesture_haptic_summary">Provide haptic feedback on double tap to sleep gesture</string>
+    <string name="pref_sleep_gesture_haptic_title">רטט בהקשה כפולה</string>
+    <string name="pref_sleep_gesture_haptic_summary">משוב רטט בעת הקשה כפולה לכיבוי המסך</string>
     <string name="settings_lock_layout_title">נעילת פריסת התצוגה</string>
     <string name="settings_lock_layout_summary_on">לא ניתן להוסיף, להסיר ולהזיז סמלים ויישומונים על מסך הבית</string>
     <string name="settings_lock_layout_summary_off">ניתן להוסיף, להסיר ולהזיז סמלים ויישומונים על מסך הבית</string>
@@ -62,7 +62,7 @@
     <string name="background_opacity_title">שקיפות הרקע</string>
     <string name="pref_show_hotseat_qsb_title">הצגת סרגל החיפוש</string>
     <string name="pref_show_hotseat_qsb_summary">בתחתית מסך הבית</string>
-    <string name="drawer_search_title">App search bar location</string>
+    <string name="drawer_search_title">סרגל חיפוש במגירת האפליקציות</string>
     <string name="drawer_search_summary">הצגת סרגל חיפוש בחלק העליון של מגירת האפליקציות</string>
     <string name="allow_wallpaper_scrolling">גלילת הטפט</string>
     <string name="allow_wallpaper_scrolling_summary">אפקט גלילה לטפט עבור מסכים מרובים</string>
@@ -122,7 +122,7 @@
     <string name="label_voice_search">חיפוש קולי</string>
     <string name="label_ai_mode">מצב AI</string>
     <string name="ai_mode_not_available">תכונות AI אינן זמינות</string>
-    <string name="label_gemini_search">AI mode</string>
+    <string name="label_gemini_search">מצב AI</string>
     <string name="dock_music_search_title">חיפוש מוסיקה</string>
     <string name="dock_music_search_summary">הפעלת חיפוש מוסיקה בלחיצה על סמל המיקרופון</string>
     <string name="dock_search_title">סרגל החיפוש של Google</string>
