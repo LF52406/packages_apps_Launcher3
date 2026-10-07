@@ -57,12 +57,12 @@
     <string name="recent_task_option_kill_app">Ukončiť</string>
     <string name="recents_app_killed">Aplikácia bola ukončená</string>
     <string name="row_height_title">Výška riadku</string>
-    <string name="hotseat_bg_title">Hotseat pozadie</string>
+    <string name="hotseat_bg_title">Pozadie doku</string>
     <string name="hotseat_bg_summary">Pridať priesvitné pozadie do doku aplikácie</string>
     <string name="background_opacity_title">Priehľadnosť pozadia</string>
     <string name="pref_show_hotseat_qsb_title">Zobraziť vyhľadávací panel</string>
     <string name="pref_show_hotseat_qsb_summary">V spodnej časti domovskej obrazovky</string>
-    <string name="drawer_search_title">App search bar location</string>
+    <string name="drawer_search_title">Vyhľadávací panel v zásuvke aplikácií</string>
     <string name="drawer_search_summary">Zobraziť vyhľadávací panel v hornej časti zásuvky aplikácií</string>
     <string name="allow_wallpaper_scrolling">Posúvanie tapety</string>
     <string name="allow_wallpaper_scrolling_summary">Efekt posúvania tapety pre viacero obrazoviek</string>
