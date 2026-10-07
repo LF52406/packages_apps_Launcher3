@@ -3,7 +3,7 @@
 <resources>
     <string name="settings_title">Configuració de la pantalla d\'inici</string>
     <string name="home_category_title">Pàgina d\'inici</string>
-    <string name="home_category_summary">Configura el panel de Google Now i altres</string>
+    <string name="home_category_summary">Personalitza el comportament i la disposició de la pantalla d’inici</string>
     <string name="icons_category_title">Icones</string>
     <string name="icons_category_summary">Configura la mida i altres opcions de les icones</string>
     <string name="app_drawer_category_title">Calaix d\'aplicacions</string>

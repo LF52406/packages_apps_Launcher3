@@ -3,7 +3,7 @@
 <resources>
     <string name="settings_title">Aloitusnäytön asetukset</string>
     <string name="home_category_title">Aloitusnäyttö</string>
-    <string name="home_category_summary">Säädä Google Now paneelin asetukset</string>
+    <string name="home_category_summary">Mukauta aloitusnäytön toimintaa ja asettelua</string>
     <string name="icons_category_title">Ikonit</string>
     <string name="icons_category_summary">Aseta kuvakkeen koko ja paljon muuta</string>
     <string name="app_drawer_category_title">Sovellusvalitisin</string>
@@ -27,8 +27,8 @@
     <string name="updating_launcher_components">Käynnistetään käynnistysohjelma uudelleen käynnistimen komponenttien päivittämiseksi...</string>
     <string name="pref_sleep_gesture_title">Tuplanäpäytä horrostilaan</string>
     <string name="pref_sleep_gesture_summary">Double tap empty space on home screen to turn off the screen</string>
-    <string name="pref_sleep_gesture_haptic_title">Vibrate on double tap to sleep</string>
-    <string name="pref_sleep_gesture_haptic_summary">Provide haptic feedback on double tap to sleep gesture</string>
+    <string name="pref_sleep_gesture_haptic_title">Värinä kaksoisnapautuksesta</string>
+    <string name="pref_sleep_gesture_haptic_summary">Anna haptinen palaute, kun näyttö sammutetaan kaksoisnapauttamalla</string>
     <string name="settings_lock_layout_title">Lukitse asettelu</string>
     <string name="settings_lock_layout_summary_on">Kuvakkeita ja widgettejä ei voi lisätä, poistaa tai siirtää kotinäytöllä</string>
     <string name="settings_lock_layout_summary_off">Kuvakkeet ja widgetit voi lisätä, poistaa tai siirtää kotinäytöllä</string>
@@ -62,7 +62,7 @@
     <string name="background_opacity_title">Taustan läpinäkyvyys</string>
     <string name="pref_show_hotseat_qsb_title">Näytä hakupalkki</string>
     <string name="pref_show_hotseat_qsb_summary">Aloitusnäytön alareunassa</string>
-    <string name="drawer_search_title">App search bar location</string>
+    <string name="drawer_search_title">Sovellusvalikon hakupalkki</string>
     <string name="drawer_search_summary">Näytä hakupalkki sovellusvalikon yläreunassa</string>
     <string name="allow_wallpaper_scrolling">Taustakuvan vieritys</string>
     <string name="allow_wallpaper_scrolling_summary">Taustakuvan vierintäefekti usealle näytölle</string>
@@ -83,8 +83,8 @@
     <string name="single_page_center_summary">Keskitä taustakuva jos vain yksi sivu on käytössä</string>
     <string name="drawer_scrollbar_title">Vierityspalkki</string>
     <string name="drawer_scrollbar_summary">Scrollbar on side of the app drawer</string>
-    <string name="perf_dark_status_bar_title">Dark status bar</string>
-    <string name="perf_dark_status_bar_summary">Always use dark status bar on home screen</string>
+    <string name="perf_dark_status_bar_title">Tummat tilapalkin kuvakkeet</string>
+    <string name="perf_dark_status_bar_summary">Käytä aloitusnäytössä aina tummia tilapalkin kuvakkeita</string>
     <string name="app_library_title">Sovelluskirjasto</string>
     <string name="app_library_search_hint">Sovelluskirjasto</string>
     <string name="app_library_search_cancel">Peruuta</string>

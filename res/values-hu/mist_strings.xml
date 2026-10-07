@@ -3,7 +3,7 @@
 <resources>
     <string name="settings_title">Kezdőoldal-beállítások</string>
     <string name="home_category_title">Kezdőképernyő</string>
-    <string name="home_category_summary">A \'Google Now\' panel és egyebek beállítása</string>
+    <string name="home_category_summary">A kezdőképernyő viselkedésének és elrendezésének testreszabása</string>
     <string name="icons_category_title">Ikonok</string>
     <string name="icons_category_summary">Ikonméret-beállítás és egyebek</string>
     <string name="app_drawer_category_title">Alkalmazásfiók</string>
@@ -57,7 +57,7 @@
     <string name="recent_task_option_kill_app">Leállítás</string>
     <string name="recents_app_killed">Az alkalmazás leállt</string>
     <string name="row_height_title">Sormagasság</string>
-    <string name="hotseat_bg_title">Hotseat háttér</string>
+    <string name="hotseat_bg_title">Dokk háttere</string>
     <string name="hotseat_bg_summary">Áttetsző háttereket adhat az alkalmazásfiókhoz</string>
     <string name="background_opacity_title">Háttérátlátszóság</string>
     <string name="pref_show_hotseat_qsb_title">Keresősáv megjelenítése</string>

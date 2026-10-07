@@ -3,7 +3,7 @@
 <resources>
     <string name="settings_title">Ρυθμίσεις Αρχικής Οθόνης</string>
     <string name="home_category_title">Αρχική οθόνη</string>
-    <string name="home_category_summary">Ρύθμιση πλαισίου Google now και άλλα</string>
+    <string name="home_category_summary">Προσαρμογή της συμπεριφοράς και της διάταξης της αρχικής οθόνης</string>
     <string name="icons_category_title">Εικονίδια</string>
     <string name="icons_category_summary">Ορισμός μεγέθους εικονιδίου και πολλά άλλα</string>
     <string name="app_drawer_category_title">Καρτέλα εφαρμογών</string>
@@ -57,7 +57,7 @@
     <string name="recent_task_option_kill_app">Τερματισμός</string>
     <string name="recents_app_killed">Η εφαρμογή τερματίστηκε</string>
     <string name="row_height_title">Ύψος σειράς</string>
-    <string name="hotseat_bg_title">Φόντο Hotseat</string>
+    <string name="hotseat_bg_title">Φόντο γραμμής αγαπημένων</string>
     <string name="hotseat_bg_summary">Προσθήκη ημιδιαφανούς φόντου στη γραμμή εφαρμογών</string>
     <string name="background_opacity_title">Αδιαφάνεια φόντου</string>
     <string name="pref_show_hotseat_qsb_title">Εμφάνιση γραμμής αναζήτησης</string>

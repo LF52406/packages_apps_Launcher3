@@ -57,7 +57,7 @@
     <string name="recent_task_option_kill_app">Ukončit</string>
     <string name="recents_app_killed">Aplikace ukončena</string>
     <string name="row_height_title">Výška řádku</string>
-    <string name="hotseat_bg_title">Pozadí Hotseat</string>
+    <string name="hotseat_bg_title">Pozadí doku</string>
     <string name="hotseat_bg_summary">Přidat průsvitné pozadí do doku aplikace</string>
     <string name="background_opacity_title">Neprůhlednost pozadí</string>
     <string name="pref_show_hotseat_qsb_title">Zobrazit vyhledávací panel</string>
