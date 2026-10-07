@@ -18,7 +18,7 @@
     <string name="title_show_google_app">கூகுள் செயலி காட்டு</string>
     <string name="msg_minus_one_on_left">முதன்மைமுகப்பிற் வலந்தள்ளுகையில்</string>
     <string name="msg_minus_one_on_right">முதன்மைமுகப்பிற் இடந்தள்ளுகையில்</string>
-    <string name="suggestion_pref_screen_title">Suggestions</string>
+    <string name="suggestion_pref_screen_title">பரிந்துரைகள்</string>
     <string name="suggestion_pref_screen_desc">அனைத்து பயன்பாடுகளிலும் முகப்புத் திரையிலும் பரிந்துரைகளை காட்டு</string>
     <string name="pref_restart_title">மீண்டும் தொடங்கு</string>
     <string name="pref_restart_summary">நிலுவையிலுள்ள மாற்றங்களைப் பயன்படுத்த லாஞ்சரை மறுதொடக்கம் செய்</string>
