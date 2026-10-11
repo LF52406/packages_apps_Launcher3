@@ -24,16 +24,25 @@ import androidx.annotation.Nullable;
 import com.android.quickstep.views.RecentsView;
 import com.android.quickstep.views.TaskView;
 
-public class IOSRecentLayout implements RecentLayoutHandler {
+/**
+ * iOS-inspired, overlapped Overview carousel.
+ *
+ * Transformations are derived directly from the laid-out card center and the current viewport
+ * center. This avoids mismatches between the platform's page spacing / clamped page offsets and
+ * the position of a rendered card, and works in both LTR and RTL without double mirroring.
+ *
+ * No independent per-card animators: the layout follows the real gesture/scroller position on
+ * every frame. The mapping is continuously differentiable, including at card centers.
+ */
+public final class IOSRecentLayout implements RecentLayoutHandler {
 
-    private static final float CENTER_SCALE = 1.00f;
-    private static final float NEIGHBOR_SCALE_1 = 0.94f;
-    private static final float NEIGHBOR_SCALE_2 = 0.88f;
-    private static final float MIN_SCALE = 0.80f;
-
-    private static final float OVERLAP_DIST_1 = 0.22f;
-    private static final float OVERLAP_DIST_2 = 0.40f;
-    private static final float OVERLAP_DIST_3 = 0.58f;
+    private static final float MIN_SCALE = 0.85f;
+    private static final float SCALE_RANGE = 1f - MIN_SCALE;
+    private static final float VISUAL_SPREAD = 0.96f;
+    private static final float SPREAD_DECAY = 0.60f;
+    private static final float NEAR_FADE_START = 2.65f;
+    private static final float FAR_FADE_END = 3.50f;
+    private static final float VISIBLE_DISTANCE = 3.55f;
 
     @NonNull
     @Override
@@ -43,128 +52,106 @@ public class IOSRecentLayout implements RecentLayoutHandler {
 
     @Override
     public void onDetached(@NonNull RecentsView<?, ?> recentsView) {
-        int childCount = recentsView.getChildCount();
-        for (int i = 0; i < childCount; i++) {
-            View child = recentsView.getChildAt(i);
-            if (child instanceof TaskView) {
-                ((TaskView) child).setColorTint(0f, 0);
-            }
+        for (TaskView task : recentsView.getTaskViews()) {
+            task.setColorTint(0f, 0);
         }
     }
 
     @Nullable
     @Override
-    public Boolean isTaskViewVisible(@NonNull RecentsView<?, ?> recentsView, @NonNull TaskView taskView) {
-        int childIndex = recentsView.indexOfChild(taskView);
-        if (childIndex < 0)
-            return false;
-        int scroll = recentsView.getPagedOrientationHandler().getPrimaryScroll(recentsView);
-        int pageScroll = recentsView.getScrollForPage(childIndex);
-        int pageSize = recentsView.getLastComputedTaskSize().width();
-        if (pageSize <= 0)
-            pageSize = recentsView.getWidth();
-        if (pageSize <= 0)
-            return true;
-
-        float scrollDelta = scroll - pageScroll;
-        float p = scrollDelta / (float) pageSize;
-        return Math.abs(p) <= 4.0f;
+    public Boolean isTaskViewVisible(@NonNull RecentsView<?, ?> recentsView,
+            @NonNull TaskView taskView) {
+        if (recentsView.indexOfChild(taskView) < 0) return false;
+        if (taskView.getWidth() <= 0 || recentsView.getWidth() <= 0
+                || recentsView.getLastComputedTaskSize().width() <= 0) return true;
+        return Math.abs(getNativeCenterOffset(recentsView, taskView))
+                / getNominalPageSize(recentsView) < VISIBLE_DISTANCE;
     }
 
     @Override
-    public void calculateTransform(
-            @NonNull RecentsView<?, ?> recentsView,
-            @NonNull TaskView taskView,
-            int taskIndex,
-            int taskCount,
-            float scrollProgress,
+    public void calculateTransform(@NonNull RecentsView<?, ?> recentsView,
+            @NonNull TaskView taskView, int taskIndex, int taskCount, float scrollProgress,
             @NonNull StyleTransform outTransform) {
-
         outTransform.reset();
 
-        int fullWidth = recentsView.getLastComputedTaskSize().width();
-        int fullHeight = recentsView.getLastComputedTaskSize().height();
-        if (fullWidth <= 0 || fullHeight <= 0) {
+        int cardWidth = recentsView.getLastComputedTaskSize().width();
+        if (cardWidth <= 0 || taskView.getWidth() <= 0 || recentsView.getWidth() <= 0) {
             return;
         }
 
-        float density = recentsView.getResources().getDisplayMetrics().density;
-        float childSize = (float) fullWidth;
+        // Child left/top positions are untransformed layout coordinates. This geometric offset
+        // stays correct while the parent is being scaled for app launch or Overview entry.
+        final float nativeOffset = getNativeCenterOffset(recentsView, taskView);
+        final float distance = Math.abs(nativeOffset) / getNominalPageSize(recentsView);
 
-        float p = scrollProgress;
-        float d = Math.abs(p);
-
-        float scale = getScaleForDistance(d);
-        float elevation = getElevationForDistance(d, density);
-        float alpha = getAlphaForDistance(d);
-
-        float visualDist = getVisualDistance(d, childSize);
-        float signedVisualOffset = (p >= 0f) ? -visualDist : visualDist;
-
-        float transX = signedVisualOffset + (p * childSize);
-        if (recentsView.isRtl()) {
-            transX = -transX;
+        if (distance >= VISIBLE_DISTANCE) {
+            // Don't apply enormous offscreen translations or repeatedly tint hidden thumbnails.
+            outTransform.scale = MIN_SCALE;
+            outTransform.elevation = 0f;
+            outTransform.alpha = 0f;
+            return;
         }
 
-        taskView.setColorTint(0f, 0);
+        final float visualOffset = getVisualDistance(distance, cardWidth);
+        final float targetOffset = Math.copySign(visualOffset, nativeOffset);
+        final float density = recentsView.getResources().getDisplayMetrics().density;
 
-        outTransform.scale = scale;
-        outTransform.translationX = transX;
+        outTransform.translationX = targetOffset - nativeOffset;
         outTransform.translationY = 0f;
-        outTransform.elevation = elevation;
-        outTransform.alpha = alpha;
+        outTransform.scale = getScaleForDistance(distance);
+        outTransform.elevation = getElevationForDistance(distance, density);
+        outTransform.alpha = getAlphaForDistance(distance);
     }
 
-    private float smoothstep(float t) {
-        float clamped = Math.max(0f, Math.min(1f, t));
-        return clamped * clamped * (3f - 2f * clamped);
+    private static float getNominalPageSize(@NonNull RecentsView<?, ?> recentsView) {
+        int cardWidth = recentsView.getLastComputedTaskSize().width();
+        return Math.max(1f, cardWidth + recentsView.getPageSpacing());
     }
 
-    private float getScaleForDistance(float d) {
-        if (d <= 1.0f) {
-            float t = smoothstep(d);
-            return CENTER_SCALE - t * (CENTER_SCALE - NEIGHBOR_SCALE_1);
-        } else if (d <= 2.0f) {
-            return NEIGHBOR_SCALE_1 - (d - 1.0f) * (NEIGHBOR_SCALE_1 - NEIGHBOR_SCALE_2);
-        } else if (d <= 3.0f) {
-            return NEIGHBOR_SCALE_2 - (d - 2.0f) * (NEIGHBOR_SCALE_2 - MIN_SCALE);
-        } else {
-            return Math.max(0.70f, MIN_SCALE - (d - 3.0f) * 0.04f);
-        }
+    /**
+     * Mirrors PagedView's screen-center calculation, including its scale and pivot, so the
+     * geometry remains anchored during the app-to-Overview transition.
+     */
+    private static float getNativeCenterOffset(@NonNull RecentsView<?, ?> recentsView,
+            @NonNull TaskView taskView) {
+        final float parentScale = Math.max(0.01f, recentsView.getScaleX());
+        final float pivot = recentsView.getPivotX();
+        final float viewportCenter =
+                (recentsView.getWidth() * 0.5f - pivot) / parentScale + pivot;
+        // Exclude the previous iOS transform, but preserve any ordinary AOSP launch/gesture
+        // translation. This makes the result stable when Recents moves under a running animation.
+        final float baseTranslation =
+                taskView.getTranslationX() - taskView.getCustomStyleTranslationX();
+        return (taskView.getLeft() + taskView.getWidth() * 0.5f + baseTranslation)
+                - (recentsView.getScrollX() + viewportCenter);
     }
 
-    private float getElevationForDistance(float d, float density) {
-        if (d <= 1.0f) {
-            float t = smoothstep(d);
-            return (32f - t * 12f) * density;
-        } else if (d <= 2.0f) {
-            return (20f - (d - 1.0f) * 10f) * density;
-        } else if (d <= 3.0f) {
-            return (10f - (d - 2.0f) * 6f) * density;
-        } else {
-            return Math.max(1f * density, (4f - (d - 3.0f) * 2f) * density);
-        }
+    // Saturating exponential gives a smooth, continuous visual spacing for any gesture position,
+    // instead of piecewise linear offsets that produce velocity jumps at +/-1, +/-2 and +/-3.
+    static float getVisualDistance(float distance, float cardWidth) {
+        return VISUAL_SPREAD * cardWidth *
+                (1f - (float) Math.exp(-SPREAD_DECAY * Math.max(0f, distance)));
     }
 
-    private float getVisualDistance(float d, float childSize) {
-        if (d <= 1.0f) {
-            return d * (OVERLAP_DIST_1 * childSize);
-        } else if (d <= 2.0f) {
-            return (OVERLAP_DIST_1 + (d - 1.0f) * (OVERLAP_DIST_2 - OVERLAP_DIST_1)) * childSize;
-        } else if (d <= 3.0f) {
-            return (OVERLAP_DIST_2 + (d - 2.0f) * (OVERLAP_DIST_3 - OVERLAP_DIST_2)) * childSize;
-        } else {
-            return (OVERLAP_DIST_3 + (d - 3.0f) * 0.20f) * childSize;
-        }
+    // sqrt(1 + d²) - 1 has a zero first derivative at the focused card (d=0), preventing
+    // a visible kink when the center card changes direction during a drag or snap.
+    static float getScaleForDistance(float distance) {
+        float d = Math.max(0f, distance);
+        float curve = (float) Math.sqrt(1f + d * d) - 1f;
+        return MIN_SCALE + SCALE_RANGE * (float) Math.exp(-0.80f * curve);
     }
 
-    private float getAlphaForDistance(float d) {
-        if (d <= 3.2f) {
-            return 1.0f;
-        } else if (d <= 4.2f) {
-            return Math.max(0f, 1.0f - (d - 3.2f) / 1.0f);
-        } else {
-            return 0f;
-        }
+    static float getElevationForDistance(float distance, float density) {
+        float d = Math.max(0f, distance);
+        float curve = (float) Math.sqrt(1f + d * d) - 1f;
+        return (4f + 28f * (float) Math.exp(-1.2f * curve)) * density;
+    }
+
+    static float getAlphaForDistance(float distance) {
+        if (distance <= NEAR_FADE_START) return 1f;
+        if (distance >= FAR_FADE_END) return 0f;
+        float t = (distance - NEAR_FADE_START) / (FAR_FADE_END - NEAR_FADE_START);
+        float smoothstep = t * t * (3f - 2f * t);
+        return 1f - smoothstep;
     }
 }

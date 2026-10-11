@@ -2814,7 +2814,7 @@ public abstract class RecentsView<
             updateOrientationHandler(/* forceRecreateDragLayerControllers = */ false);
         }
 
-        setEnableFreeScroll(true);
+        updateRecentStyleScrollMode();
         setEnableDrawingLiveTile(mCurrentGestureEndTarget == GestureState.GestureEndTarget.RECENTS);
         Log.d(TAG, "onGestureAnimationEnd - mEnableDrawingLiveTile: " + mEnableDrawingLiveTile);
         if (mEnableDrawingLiveTile) {
@@ -3560,8 +3560,41 @@ public abstract class RecentsView<
         return super.snapToPage(whichPage, delta, duration, immediate);
     }
 
+    /**
+     * The iOS-style carousel snaps to a single card with bounded settling time. All other
+     * styles keep the existing AOSP free-scroll / snap behavior.
+     */
+    public void updateRecentStyleScrollMode() {
+        if (isGestureActive()) {
+            return;
+        }
+        setEnableFreeScroll(mRecentStyleController == null
+                || mRecentStyleController.getCurrentStyle() != RecentStyle.IOS);
+    }
+
+    @Override
+    protected int getSnapAnimationDuration() {
+        return mRecentStyleController != null
+                && mRecentStyleController.getCurrentStyle() == RecentStyle.IOS
+                        ? 320 : super.getSnapAnimationDuration();
+    }
+
     @Override
     protected boolean snapToPageWithVelocity(int whichPage, int velocity) {
+        if (mRecentStyleController != null
+                && mRecentStyleController.getCurrentStyle() == RecentStyle.IOS) {
+            final int count = getPageCount();
+            if (count == 0) return false;
+            final int page = Math.max(0, Math.min(whichPage, count - 1));
+            final int delta = getScrollForPage(page)
+                    - getPagedOrientationHandler().getPrimaryScroll(this);
+            final float distanceRatio = Math.min(1f,
+                    Math.abs(delta) / (float) Math.max(1, getWidth()));
+            final float velocityRatio = Math.min(1f, Math.abs((float) velocity) / 5000f);
+            final int duration = Math.max(210, Math.min(410,
+                    Math.round(325f + distanceRatio * 65f - velocityRatio * 125f)));
+            return snapToPage(page, delta, duration, false);
+        }
         if (mRecentStyleController != null && mRecentStyleController.isCustomStyleActive()) {
             Integer targetPage = mRecentStyleController.snapToPageWithVelocity(this, whichPage, velocity);
             if (targetPage != null) {

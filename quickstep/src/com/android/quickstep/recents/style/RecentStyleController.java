@@ -79,6 +79,7 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
         }
         loadStylePreference();
         mActiveHandler.onAttached(recentsView);
+        recentsView.updateRecentStyleScrollMode();
     }
 
     public void detach() {
@@ -224,6 +225,7 @@ public class RecentStyleController implements SharedPreferences.OnSharedPreferen
 
         if (mRecentsView != null) {
             mActiveHandler.onAttached(mRecentsView);
+            mRecentsView.updateRecentStyleScrollMode();
             mRecentsView.post(() -> {
                 if (mRecentsView != null) {
                     mRecentsView.requestLayout();

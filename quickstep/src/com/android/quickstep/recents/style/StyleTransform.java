@@ -56,11 +56,25 @@ public class StyleTransform {
         if (taskView == null) {
             return;
         }
-        taskView.setCustomStyleTranslationX(translationX);
-        taskView.setCustomStyleTranslationY(translationY);
-        taskView.setCustomStyleScale(scale);
-        taskView.setRotation(rotation);
-        taskView.setElevation(elevation);
-        taskView.setCustomStyleAlpha(alpha);
+        // Each setter may invalidate the view or recompute thumbnail fullscreen parameters.
+        // Avoid doing that on every frame when a property did not actually change.
+        if (taskView.getCustomStyleTranslationX() != translationX) {
+            taskView.setCustomStyleTranslationX(translationX);
+        }
+        if (taskView.getCustomStyleTranslationY() != translationY) {
+            taskView.setCustomStyleTranslationY(translationY);
+        }
+        if (taskView.getCustomStyleScale() != scale) {
+            taskView.setCustomStyleScale(scale);
+        }
+        if (taskView.getRotation() != rotation) {
+            taskView.setRotation(rotation);
+        }
+        if (taskView.getElevation() != elevation) {
+            taskView.setElevation(elevation);
+        }
+        if (taskView.getCustomStyleAlpha() != alpha) {
+            taskView.setCustomStyleAlpha(alpha);
+        }
     }
 }
