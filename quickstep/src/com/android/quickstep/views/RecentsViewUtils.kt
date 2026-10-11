@@ -65,6 +65,7 @@ import com.android.quickstep.SystemUiProxy
 import com.android.quickstep.TaskAnimationManager
 import com.android.quickstep.util.DesktopTask
 import com.android.quickstep.util.GroupTask
+import com.android.quickstep.util.PinnedTaskRepository
 import com.android.quickstep.util.TaskGridNavHelper
 import com.android.quickstep.views.RecentsView.DESKTOP_CAROUSEL_DETACH_PROGRESS
 import com.android.quickstep.views.RecentsView.RECENTS_GRID_PROGRESS
@@ -289,7 +290,9 @@ constructor(
 
     /** Returns false if it is the last desktop on desktop-first. Otherwise,returns true. */
     fun canRemoveTaskView(taskView: TaskView) =
-        !isInDesktopFirstMode() || taskView !is DesktopTaskView || getDesktopTaskViewCount() > 1
+        !PinnedTaskRepository.isTaskViewPinned(recentsView.context, taskView) &&
+            (!isInDesktopFirstMode() || taskView !is DesktopTaskView ||
+                getDesktopTaskViewCount() > 1)
 
     /**
      * Returns the [TaskView] that should be the current page during task binding, in the following

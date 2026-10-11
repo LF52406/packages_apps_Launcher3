@@ -97,6 +97,7 @@ import com.android.quickstep.util.BorderAnimator.Companion.DEFAULT_DISAPPEARANCE
 import com.android.quickstep.util.BorderAnimator.Companion.DEFAULT_INTERPOLATOR
 import com.android.quickstep.util.BorderAnimator.Companion.createSimpleBorderAnimator
 import com.android.quickstep.util.GroupTask
+import com.android.quickstep.util.PinnedTaskRepository
 import com.android.quickstep.util.RecentsOrientedState
 import com.android.quickstep.util.SingleTask
 import com.android.quickstep.util.TaskCornerRadius
@@ -1281,9 +1282,13 @@ constructor(
             if (state is TaskData.Data) {
                 setIcon(container.iconView, state.icon)
                 container.iconView.setText(state.title)
+                container.iconView.setLockedInRecents(
+                    PinnedTaskRepository.isPinned(context, container.task)
+                )
             } else {
                 setIcon(container.iconView, null)
                 container.iconView.setText(null)
+                container.iconView.setLockedInRecents(false)
             }
         }
 

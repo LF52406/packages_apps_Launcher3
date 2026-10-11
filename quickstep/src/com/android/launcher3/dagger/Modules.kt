@@ -339,6 +339,7 @@ object TaskOverlayModule {
             TaskShortcutFactory.KILL_APP,
             TaskShortcutFactory.SPLIT_SELECT,
             TaskShortcutFactory.UNINSTALL,
+            TaskShortcutFactory.PIN_RECENTS,
             TaskShortcutFactory.PIN,
             TaskShortcutFactory.INSTALL,
             TaskShortcutFactory.FLOATING,

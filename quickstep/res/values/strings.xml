@@ -23,7 +23,12 @@
 
     <!-- Options for recent tasks -->
     <!-- Title for an option to keep an app pinned to the screen until it is unpinned -->
-    <string name="recent_task_option_pin">Pin</string>
+    <string name="recent_task_option_pin">Pin screen</string>
+    <string name="recent_task_option_pin_recents">Lock in Recents</string>
+    <string name="recent_task_option_unpin_recents">Unlock from Recents</string>
+    <string name="recent_task_pinned">App locked in Recents</string>
+    <string name="recent_task_unpinned">App unlocked from Recents</string>
+    <string name="recent_task_pinned_accessibility">%1$s, locked in Recents</string>
     <!-- Title for an option to enter freeform mode for a given app -->
     <string name="recent_task_option_freeform">Freeform</string>
     <!-- Title and content description for an option to enter desktop windowing mode for a given app -->

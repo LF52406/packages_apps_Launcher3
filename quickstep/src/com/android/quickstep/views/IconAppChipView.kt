@@ -35,6 +35,7 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.animation.addListener
+import androidx.core.content.ContextCompat
 import androidx.core.view.updateLayoutParams
 import com.android.app.animation.Interpolators
 import com.android.launcher3.Flags
@@ -71,6 +72,7 @@ constructor(
 
     // Two textview so we can ellipsize the collapsed view and crossfade on expand to the full name.
     private var appTitle: TextView? = null
+    private var isLockedInRecents = false
     private var isLayoutNaturalToLauncher = true
 
     private val backgroundRelativeLtrLocation = Rect()
@@ -249,6 +251,32 @@ constructor(
     fun setText(text: CharSequence?) {
         if (text == appTitle?.text) return
         appTitle?.text = text
+        updatePinnedAccessibility()
+    }
+
+    /** Small in-chip lock indicator; separate from system screen pinning. */
+    fun setLockedInRecents(locked: Boolean) {
+        if (locked == isLockedInRecents) return
+        isLockedInRecents = locked
+        val title = appTitle ?: return
+        val lockIcon =
+            if (locked) ContextCompat.getDrawable(context, R.drawable.ic_lock)?.mutate()
+            else null
+        if (lockIcon != null) {
+            val size = (14 * resources.displayMetrics.density).toInt()
+            lockIcon.setBounds(0, 0, size, size)
+            lockIcon.setTint(title.currentTextColor)
+        }
+        title.setCompoundDrawablesRelative(null, null, lockIcon, null)
+        title.compoundDrawablePadding = (4 * resources.displayMetrics.density).toInt()
+        updatePinnedAccessibility()
+    }
+
+    private fun updatePinnedAccessibility() {
+        appTitle?.contentDescription =
+            if (isLockedInRecents)
+                context.getString(R.string.recent_task_pinned_accessibility, appTitle?.text ?: "")
+            else null
     }
 
     fun getDrawable(): Drawable? = iconView?.drawable

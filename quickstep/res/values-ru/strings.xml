@@ -19,7 +19,12 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="recent_task_option_pin" msgid="7929860679018978258">"Закрепить"</string>
+    <string name="recent_task_option_pin" msgid="7929860679018978258">"Закрепить экран"</string>
+    <string name="recent_task_option_pin_recents">Закрепить в недавних</string>
+    <string name="recent_task_option_unpin_recents">Открепить из недавних</string>
+    <string name="recent_task_pinned">Приложение закреплено в недавних</string>
+    <string name="recent_task_unpinned">Приложение откреплено из недавних</string>
+    <string name="recent_task_pinned_accessibility">%1$s, закреплено в недавних</string>
     <string name="recent_task_option_freeform" msgid="48863056265284071">"Произвольная форма"</string>
     <string name="recent_task_option_desktop" msgid="8280879717125435668">"Мультиоконный режим"</string>
     <string name="recent_split_task_option_desktop" msgid="7272418191932478598">"Компьютер для задачи \"%1$s\""</string>

@@ -37,6 +37,8 @@ import com.android.launcher3.util.DynamicResource
 import com.android.launcher3.util.MSDLPlayerWrapper
 import com.android.launcher3.views.ActivityContext
 import com.android.quickstep.SystemUiProxy
+import com.android.quickstep.RecentTasksList
+import com.android.quickstep.util.PinnedTaskRepository
 import com.android.quickstep.util.TaskGridNavHelper
 import com.android.quickstep.views.RecentsView.RECENTS_SCALE_PROPERTY
 import com.android.quickstep.views.RecentsView.TAG
@@ -66,6 +68,7 @@ constructor(
     @LightweightBackground(LightweightBackgroundPriority.UI)
     private val uiHelperExecutor: ListeningExecutorService,
     private val activityManagerWrapper: ActivityManagerWrapper,
+    private val recentTasksList: RecentTasksList,
     private val msdlPlayerWrapper: MSDLPlayerWrapper,
 ) {
     @AssistedFactory
@@ -122,6 +125,10 @@ constructor(
         shouldRemoveTaskView: Boolean,
         isSplitSelection: Boolean,
     ): SpringSet? {
+        if (shouldRemoveTaskView && !isSplitSelection &&
+                PinnedTaskRepository.isTaskViewPinned(recentsView.context, dismissedTaskView)) {
+            return null
+        }
         val isDismissingHomeTask = recentsView.homeTaskView === dismissedTaskView
         val gridEndData = getGridEndData(dismissedTaskView, isDismissingHomeTask)
         val dismissedTaskSecondaryDimension =
@@ -331,26 +338,68 @@ constructor(
         }
     }
 
-    /** Dismisses all */
+    /**
+     * When no apps are pinned, retain the platform's fast clear-all path. If any app is pinned,
+     * fetch ALL recent task keys (not just visible tiles) and remove tasks selectively. A split
+     * group containing a pinned app is kept as a unit to avoid destroying its pinned task.
+     */
     fun dismissAllTasks() {
+        if (!PinnedTaskRepository.hasPinnedApps(recentsView.context)) {
+            dismissAllTasksInternal(null)
+            return
+        }
+
+        recentTasksList.getTaskKeys(Int.MAX_VALUE) { groups ->
+            val removableIds = groups
+                .filterNot { group ->
+                    group.tasks.any { PinnedTaskRepository.isPinned(recentsView.context, it) }
+                }
+                .flatMap { group -> group.tasks.map { it.key.id } }
+                .filter { it >= 0 }
+                .distinct()
+
+            // A failed/empty task query must never fall back to removing pinned tasks.
+            if (removableIds.isEmpty()) {
+                InteractionJankMonitorWrapper.cancel(Cuj.CUJ_LAUNCHER_OVERVIEW_CLEAR_ALL)
+            } else {
+                dismissAllTasksInternal(removableIds)
+            }
+        }
+    }
+
+    /**
+     * Null means no pinned apps: the existing system-wide clear-all semantics apply.
+     * Non-null means remove only the enumerated task IDs, preserving other profiles/displays.
+     */
+    private fun dismissAllTasksInternal(removableIds: List<Int>?) {
+        val removableSet = removableIds?.toSet()
         val allDismissSprings =
             recentsView.mUtils.taskViews
                 .reversed()
-                .filter { taskView -> recentsView.isTaskViewVisible(taskView) }
+                .filter { taskView ->
+                    recentsView.isTaskViewVisible(taskView) &&
+                        (removableSet == null ||
+                            taskView.taskIds.all { it in removableSet })
+                }
                 .mapNotNull { createDismissedTaskViewSpringAnimation(it) }
+
         SpringSet(SpringAnimation(FloatValueHolder()).setSpring(SpringForce(1f)))
             .playTogether(allDismissSprings)
             .addEndListener {
                 with(recentsView) {
-                    // Remove desktops first, since desks can be empty (so they have no recent
-                    // tasks), and closing all tasks on a desk doesn't always necessarily mean that
-                    // the desk will be removed. So, there are no guarantees that the below call to
-                    // `ActivityManagerWrapper::removeAllRecentTasks()` will be enough.
-                    systemUiProxy.removeAllDesks(DesktopModeTransitionSource.RECENTS)
-
-                    // Remove all the task views now
+                    if (removableIds == null) {
+                        // Do not remove desks if any of their tasks must be protected.
+                        systemUiProxy.removeAllDesks(DesktopModeTransitionSource.RECENTS)
+                    }
                     finishRecentsAnimation(/* toHome */ true, /* shouldPip */ false) {
-                        uiHelperExecutor.execute { activityManagerWrapper.removeAllRecentTasks() }
+                        uiHelperExecutor.execute {
+                            if (removableIds == null) {
+                                activityManagerWrapper.removeAllRecentTasks()
+                            } else {
+                                removableIds.forEach { activityManagerWrapper.removeTask(it) }
+                            }
+                        }
+                        // Overview will rebuild its tiles from Shell when re-opened.
                         removeAllTaskViews()
                         if (!mUtils.isInDesktopFirstMode()) {
                             startHome()

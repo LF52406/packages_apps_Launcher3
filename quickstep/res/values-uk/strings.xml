@@ -19,7 +19,12 @@
 
 <resources xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
-    <string name="recent_task_option_pin" msgid="7929860679018978258">"Закріпити"</string>
+    <string name="recent_task_option_pin" msgid="7929860679018978258">"Закріпити екран"</string>
+    <string name="recent_task_option_pin_recents">Закріпити в нещодавніх</string>
+    <string name="recent_task_option_unpin_recents">Відкріпити з нещодавніх</string>
+    <string name="recent_task_pinned">Застосунок закріплено в нещодавніх</string>
+    <string name="recent_task_unpinned">Застосунок відкріплено з нещодавніх</string>
+    <string name="recent_task_pinned_accessibility">%1$s, закріплено в нещодавніх</string>
     <string name="recent_task_option_freeform" msgid="48863056265284071">"Довільна форма"</string>
     <string name="recent_task_option_desktop" msgid="8280879717125435668">"Робочий стіл"</string>
     <string name="recent_split_task_option_desktop" msgid="7272418191932478598">"Робочий стіл для %1$s"</string>

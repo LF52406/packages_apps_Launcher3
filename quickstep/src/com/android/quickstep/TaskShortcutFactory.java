@@ -57,6 +57,7 @@ import com.android.launcher3.util.PackageManagerHelper;
 import com.android.launcher3.util.SplitConfigurationOptions;
 import com.android.launcher3.util.SplitConfigurationOptions.SplitPositionOption;
 import com.android.quickstep.orientation.RecentsPagedOrientationHandler;
+import com.android.quickstep.util.PinnedTaskRepository;
 import com.android.quickstep.views.GroupedTaskView;
 import com.android.quickstep.views.RecentsView;
 import com.android.quickstep.views.RecentsViewContainer;
@@ -449,6 +450,70 @@ public interface TaskShortcutFactory {
             return Collections.singletonList(new FloatingTaskShortcut(container, taskContainer));
         }
     };
+
+    /**
+     * Keeps an app's recent task(s) when Overview is cleared. Separate from screen pinning.
+     */
+    TaskShortcutFactory PIN_RECENTS = new TaskShortcutFactory() {
+        @Override
+        public List<SystemShortcut> getShortcuts(RecentsViewContainer container,
+                TaskContainer taskContainer) {
+            final Task task = taskContainer.getTask();
+            if (!PinnedTaskRepository.canPin(task)) {
+                return null;
+            }
+            return Collections.singletonList(new PinRecentsSystemShortcut(container, taskContainer,
+                    PinnedTaskRepository.isPinned(container.asContext(), task)));
+        }
+
+        @Override
+        public boolean showForGroupedTask() {
+            return true;
+        }
+
+        @Override
+        public boolean showForDesktopTask() {
+            return true;
+        }
+    };
+
+    class PinRecentsSystemShortcut extends SystemShortcut<RecentsViewContainer> {
+        private final TaskContainer mTaskContainer;
+        private final boolean mWasPinned;
+
+        PinRecentsSystemShortcut(RecentsViewContainer container, TaskContainer taskContainer,
+                boolean wasPinned) {
+            super(wasPinned ? R.drawable.ic_unpin : R.drawable.ic_lock,
+                    wasPinned ? R.string.recent_task_option_unpin_recents
+                            : R.string.recent_task_option_pin_recents,
+                    container, taskContainer.getItemInfo(), taskContainer.getTaskView());
+            mTaskContainer = taskContainer;
+            mWasPinned = wasPinned;
+        }
+
+        @Override
+        public void onClick(View view) {
+            final boolean updated = PinnedTaskRepository.setPinned(mTarget.asContext(),
+                    mTaskContainer.getTask(), !mWasPinned);
+            dismissTaskMenuView();
+            if (updated) {
+                // A pin is app-wide: refresh other visible tasks from the same package too.
+                final RecentsView<?, ?> recentsView = mTaskContainer.getTaskView().getRecentsView();
+                if (recentsView != null) {
+                    for (TaskView taskView : recentsView.getTaskViews()) {
+                        for (TaskContainer task : taskView.getTaskContainers()) {
+                            task.getIconView().setLockedInRecents(
+                                    PinnedTaskRepository.isPinned(mTarget.asContext(),
+                                            task.getTask()));
+                        }
+                    }
+                }
+                Toast.makeText(mTarget.asContext(),
+                        mWasPinned ? R.string.recent_task_unpinned : R.string.recent_task_pinned,
+                        Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
 
     TaskShortcutFactory PIN = new TaskShortcutFactory() {
         @Override

@@ -216,6 +216,7 @@ import com.android.quickstep.util.SingleTask;
 import com.android.quickstep.util.SplitTask;
 import com.android.quickstep.util.SurfaceTransaction;
 import com.android.quickstep.util.SurfaceTransactionApplier;
+import com.android.quickstep.util.PinnedTaskRepository;
 import com.android.quickstep.util.TaskGridNavHelper;
 import com.android.quickstep.util.TaskViewSimulator;
 import com.android.quickstep.util.TaskVisualsChangeListener;
@@ -3609,11 +3610,18 @@ public abstract class RecentsView<
 
     @UiThread
     public void dismissTask(int taskId, boolean removeTask) {
+        if (removeTask && PinnedTaskRepository.isTaskViewPinned(
+                getContext(), getTaskViewByTaskId(taskId))) {
+            return;
+        }
         mDismissUtils.dismissTask(taskId, removeTask);
     }
 
     /** Dismisses the entire [taskView]. */
     public void dismissTaskView(TaskView taskView, boolean removeTask) {
+        if (removeTask && PinnedTaskRepository.isTaskViewPinned(getContext(), taskView)) {
+            return;
+        }
         RecentsDismissUtils.SpringSet dismissSpringSet =
                 mDismissUtils.createTaskDismissSpringAnimation(taskView, removeTask,
                         false /* isSplitSelection */);
