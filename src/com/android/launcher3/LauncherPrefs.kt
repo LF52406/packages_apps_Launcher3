@@ -290,6 +290,10 @@ constructor(@ApplicationContext private val encryptedContext: Context) {
         @JvmField val HOTSEAT_QSB_STROKE_WIDTH = backedUpItem("pref_hotseat_qsb_stroke_width", 0)
         @JvmField val HOTSEAT_QSB_HEIGHT = backedUpItem("pref_hotseat_qsb_height", true)
         @JvmField val ICON_SIZE = backedUpItem("pref_custom_icon_size", 100)
+        // Per-user app list; do not restore a device's privacy choices to another device.
+        @JvmField
+        val RECENTS_PRIVACY_APPS =
+            nonRestorableItem("pref_recents_privacy_apps", emptySet<String>())
         @JvmField val RECENTS_CLEAR_ALL = backedUpItem("pref_recents_clear_all", true)
         @JvmField val RECENTS_LENS = backedUpItem("pref_recents_lens", false)
         @JvmField val RECENTS_MEMINFO = backedUpItem("pref_recents_meminfo", false)

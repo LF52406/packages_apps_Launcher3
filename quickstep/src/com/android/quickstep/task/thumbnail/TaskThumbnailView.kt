@@ -22,6 +22,8 @@ import android.graphics.Matrix
 import android.graphics.Outline
 import android.graphics.Path
 import android.graphics.Rect
+import android.graphics.RenderEffect
+import android.graphics.Shader
 import android.graphics.drawable.ShapeDrawable
 import android.util.AttributeSet
 import android.util.Log
@@ -37,6 +39,7 @@ import com.android.launcher3.util.ViewPool
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.AppLocked
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.BackgroundOnly
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.LiveTile
+import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.PrivacyBlur
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.Snapshot
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.SnapshotSplash
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.Uninitialized
@@ -44,6 +47,7 @@ import com.android.quickstep.views.FixedSizeImageView
 
 class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
     private val scrimView: View by lazy { findViewById(R.id.task_thumbnail_scrim) }
+    private val privacyScrimView: View by lazy { findViewById(R.id.task_thumbnail_privacy_scrim) }
     private val liveTileView: LiveTileView by lazy { findViewById(R.id.task_thumbnail_live_tile) }
     private val thumbnailView: FixedSizeImageView by lazy { findViewById(R.id.task_thumbnail) }
     private val splashBackground: View by lazy { findViewById(R.id.splash_background) }
@@ -122,6 +126,8 @@ class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
                     outline.setPath(outlinePath)
                 }
             }
+        // Task binding may occur before the view gets hardware acceleration.
+        (uiState as? PrivacyBlur)?.let(::drawPrivacyBlur)
     }
 
     override fun onRecycle() {
@@ -138,6 +144,7 @@ class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
         when (state) {
             is Uninitialized -> {}
             is LiveTile -> drawLiveWindow()
+            is PrivacyBlur -> drawPrivacyBlur(state)
             is SnapshotSplash -> drawSnapshotSplash(state)
             is BackgroundOnly -> drawBackground(state.backgroundColor)
             is AppLocked -> drawAppLocked(state.backgroundColor)
@@ -174,6 +181,8 @@ class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
         liveTileView.isInvisible = true
         thumbnailView.isInvisible = true
         thumbnailView.setImageBitmap(null)
+        thumbnailView.setRenderEffect(null)
+        privacyScrimView.isInvisible = true
         splashBackground.alpha = 0f
         splashBackground.setBackgroundColor(Color.TRANSPARENT)
         splashIcon.alpha = 0f
@@ -190,6 +199,19 @@ class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
 
     private fun drawLiveWindow() {
         liveTileView.isInvisible = false
+    }
+
+    private fun drawPrivacyBlur(state: PrivacyBlur) {
+        // No transparent Live Tile hole: an opaque background masks remote app surfaces.
+        drawBackground(state.backgroundColor)
+        state.snapshot?.let { snapshot ->
+            if (isHardwareAccelerated) {
+                thumbnailView.setImageBitmap(snapshot.bitmap)
+                thumbnailView.setRenderEffect(PRIVACY_BLUR_EFFECT)
+                thumbnailView.isInvisible = false
+            }
+        }
+        privacyScrimView.isInvisible = false
     }
 
     private fun drawAppLocked(@ColorInt background: Int) {
@@ -214,7 +236,7 @@ class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
     }
 
     fun setImageMatrix(matrix: Matrix) {
-        if (uiState is SnapshotSplash) {
+        if (uiState is SnapshotSplash || uiState is PrivacyBlur) {
             thumbnailView.imageMatrix = matrix
         }
     }
@@ -226,6 +248,8 @@ class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
     private companion object {
         const val TAG = "TaskThumbnailView"
         private const val MAX_SCRIM_ALPHA = 0.4f
+        private val PRIVACY_BLUR_EFFECT =
+            RenderEffect.createBlurEffect(56f, 56f, Shader.TileMode.CLAMP)
 
         enum class ScrimViewAlpha {
             MenuProgress,

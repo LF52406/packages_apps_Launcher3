@@ -275,4 +275,8 @@
     <string name="organizer_create_screen_title" msgid="1052454457895703433">"Створіть екран"</string>
     <string name="organizer_create_screen_description" msgid="3224132391919219061">"Виберіть категорію, щоб додати додатки й віджети зі свого телефона"</string>
     <string name="organizer_choose_layout_title" msgid="127228966942084947">"Виберіть макет"</string>
+    <!-- Recents privacy blur -->
+    <string name="recents_privacy_title">Розмиття застосунків</string>
+    <string name="recents_privacy_summary">Виберіть застосунки, картки яких будуть розмиті в нещодавніх</string>
+    <string name="recents_privacy_no_apps">Немає доступних застосунків</string>
 </resources>

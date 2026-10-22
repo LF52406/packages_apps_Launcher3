@@ -29,6 +29,7 @@ import com.android.quickstep.task.thumbnail.TaskThumbnailUiState
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.AppLocked
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.BackgroundOnly
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.LiveTile
+import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.PrivacyBlur
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.Snapshot
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.SnapshotSplash
 import com.android.quickstep.task.thumbnail.TaskThumbnailUiState.Uninitialized
@@ -70,9 +71,27 @@ object TaskUiStateMapper {
      * @param taskData The [TaskData] to convert. Can be null or a specific subclass.
      * @return A [TaskThumbnailUiState] representing the UI state for the given task data.
      */
-    fun toTaskThumbnailUiState(taskData: TaskData?): TaskThumbnailUiState =
+    @JvmOverloads
+    fun toTaskThumbnailUiState(
+        taskData: TaskData?,
+        isPrivacyProtected: Boolean = false,
+    ): TaskThumbnailUiState =
         when {
             taskData !is TaskData.Data -> Uninitialized
+            isPrivacyProtected -> {
+                // App-lock, keyguard and live task surfaces must never bypass the mask.
+                val data = if (taskData.isLocked || taskData.isAppLocked) {
+                    null
+                } else {
+                    taskData.thumbnailData
+                }
+                PrivacyBlur(
+                    data?.thumbnail?.let { bitmap ->
+                        Snapshot(bitmap, data.rotation, taskData.backgroundColor)
+                    },
+                    taskData.backgroundColor,
+                )
+            }
             taskData.isLiveTile -> LiveTile
             taskData.isLocked -> {
                 Log.d(

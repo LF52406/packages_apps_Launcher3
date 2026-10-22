@@ -34,6 +34,15 @@
         android:layout_height="match_parent"
         android:visibility="invisible"/>
 
+    <!-- Mask drawn above both the snapshot and Live Tile surface. -->
+    <View
+        android:id="@+id/task_thumbnail_privacy_scrim"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#B8151921"
+        android:importantForAccessibility="no"
+        android:visibility="invisible" />
+
     <View
         android:id="@+id/task_thumbnail_scrim"
         android:layout_width="match_parent"

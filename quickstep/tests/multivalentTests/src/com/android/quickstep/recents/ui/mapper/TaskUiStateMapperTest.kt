@@ -133,6 +133,44 @@ class TaskUiStateMapperTest {
         assertThat(result).isEqualTo(expected)
     }
 
+    @Test
+    fun privacyBlur_liveTile_usesBlurredSnapshotInsteadOfLiveSurface() {
+        val result =
+            TaskUiStateMapper.toTaskThumbnailUiState(
+                taskData = TASK_DATA.copy(isLiveTile = true),
+                isPrivacyProtected = true,
+            )
+        assertThat(result)
+            .isEqualTo(
+                TaskThumbnailUiState.PrivacyBlur(
+                    Snapshot(TASK_THUMBNAIL, Surface.ROTATION_0, TASK_BACKGROUND_COLOR),
+                    TASK_BACKGROUND_COLOR,
+                )
+            )
+    }
+
+    @Test
+    fun privacyBlur_missingSnapshot_usesOpaqueFallback() {
+        val result =
+            TaskUiStateMapper.toTaskThumbnailUiState(
+                taskData = TASK_DATA.copy(isLiveTile = true, thumbnailData = null),
+                isPrivacyProtected = true,
+            )
+        assertThat(result)
+            .isEqualTo(TaskThumbnailUiState.PrivacyBlur(null, TASK_BACKGROUND_COLOR))
+    }
+
+    @Test
+    fun privacyBlur_systemLocked_ignoresSnapshot() {
+        val result =
+            TaskUiStateMapper.toTaskThumbnailUiState(
+                taskData = TASK_DATA.copy(isLocked = true),
+                isPrivacyProtected = true,
+            )
+        assertThat(result)
+            .isEqualTo(TaskThumbnailUiState.PrivacyBlur(null, TASK_BACKGROUND_COLOR))
+    }
+
     /** TaskThumbnailUiState */
     @Test
     fun taskData_isNull_returns_Uninitialized() {

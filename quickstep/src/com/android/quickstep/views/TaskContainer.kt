@@ -24,6 +24,7 @@ import androidx.core.view.isVisible
 import com.android.app.tracing.traceSection
 import com.android.launcher3.Flags.enableRefactorDigitalWellbeingToast
 import com.android.launcher3.model.data.TaskViewItemInfo
+import com.android.launcher3.util.RecentsPrivacyPrefs
 import com.android.launcher3.util.SplitConfigurationOptions
 import com.android.launcher3.util.TransformingTouchDelegate
 import com.android.quickstep.TaskOverlayFactory
@@ -58,6 +59,8 @@ class TaskContainer(
     val overlay: TaskOverlayFactory.TaskOverlay<*> = taskOverlayFactory.createOverlay(this)
     var thumbnailPosition: ThumbnailPosition? = null
     private var overlayEnabledStatus = false
+    var isPrivacyProtected: Boolean = false
+        private set
 
     internal var thumbnailData: ThumbnailData? = null
         private set
@@ -88,6 +91,7 @@ class TaskContainer(
             taskContentView.scaleY = 1f
             overlay.reset()
             isThumbnailValid = false
+            isPrivacyProtected = false
             thumbnailData = null
             snapshotView.onRecycle()
         }
@@ -103,7 +107,7 @@ class TaskContainer(
     fun refreshOverlay(thumbnailPosition: ThumbnailPosition) =
         traceSection("TaskContainer.refreshOverlay") {
             this.thumbnailPosition = thumbnailPosition
-            if (overlayEnabledStatus) {
+            if (overlayEnabledStatus && !isPrivacyProtected) {
                 overlay.initOverlay(
                     task,
                     thumbnailData?.thumbnail,
@@ -129,14 +133,19 @@ class TaskContainer(
         clickCloseListener: OnClickListener?,
     ) =
         traceSection("TaskContainer.setState") {
+            isPrivacyProtected = state is TaskData.Data &&
+                RecentsPrivacyPrefs.isProtected(
+                    taskView.context, state.packageName, task.key.userId
+                )
             taskContentView.setState(
                 TaskUiStateMapper.toTaskHeaderState(state, hasHeader, clickCloseListener),
-                TaskUiStateMapper.toTaskThumbnailUiState(state),
+                TaskUiStateMapper.toTaskThumbnailUiState(state, isPrivacyProtected),
                 TaskUiStateMapper.toTaskAppTimerUiState(canShowAppTimer, stagePosition, state),
                 state?.taskId,
             )
             thumbnailData = if (state is TaskData.Data) state.thumbnailData else null
-            overlay.setThumbnailState(thumbnailData)
+            overlay.setThumbnailState(if (isPrivacyProtected) null else thumbnailData)
+            if (isPrivacyProtected) overlay.reset()
         }
 
     fun updateTintAmount(tintAmount: Float) {

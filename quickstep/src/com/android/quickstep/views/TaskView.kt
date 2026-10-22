@@ -951,9 +951,10 @@ constructor(
                         it.updateDisabledFlags(DISABLED_ROTATED, thumbnailPosition.isRotated)
                         it.updateDisabledFlags(
                             DISABLED_NO_THUMBNAIL,
-                            state.tasks.any { taskData ->
-                                (taskData as? TaskData.Data)?.thumbnailData?.thumbnail == null
-                            },
+                            taskContainers.any { it.isPrivacyProtected } ||
+                                state.tasks.any { taskData ->
+                                    (taskData as? TaskData.Data)?.thumbnailData?.thumbnail == null
+                                },
                         )
                     }
                 }

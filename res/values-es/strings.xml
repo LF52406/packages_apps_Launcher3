@@ -275,4 +275,8 @@
     <string name="organizer_create_screen_title" msgid="1052454457895703433">"Crear pantalla"</string>
     <string name="organizer_create_screen_description" msgid="3224132391919219061">"Elige una categoría para añadir aplicaciones y widgets desde tu teléfono"</string>
     <string name="organizer_choose_layout_title" msgid="127228966942084947">"Elegir diseño"</string>
+    <!-- Recents privacy blur -->
+    <string name="recents_privacy_title">Desenfocar vistas previas</string>
+    <string name="recents_privacy_summary">Elige las aplicaciones cuyas tarjetas se desenfocarán en Recientes</string>
+    <string name="recents_privacy_no_apps">No hay aplicaciones disponibles</string>
 </resources>

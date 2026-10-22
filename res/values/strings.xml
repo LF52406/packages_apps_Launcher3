@@ -708,4 +708,8 @@
     <string name="folder_creator_add" translatable="false">Add</string>
     <string name="folder_creator_cancel" translatable="false">Cancel</string>
 
+    <!-- Recents privacy blur -->
+    <string name="recents_privacy_title">Blur app previews</string>
+    <string name="recents_privacy_summary">Choose which apps have blurred cards in Recents</string>
+    <string name="recents_privacy_no_apps">No apps available</string>
 </resources>

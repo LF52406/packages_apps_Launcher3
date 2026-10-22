@@ -30,6 +30,10 @@ sealed class TaskThumbnailUiState {
 
     data object LiveTile : TaskThumbnailUiState()
 
+    /** Blurred snapshot or an opaque fallback when no safe snapshot is available. */
+    data class PrivacyBlur(val snapshot: Snapshot?, @ColorInt val backgroundColor: Int) :
+        TaskThumbnailUiState()
+
     data class SnapshotSplash(val snapshot: Snapshot, val splash: Drawable?) :
         TaskThumbnailUiState()
 

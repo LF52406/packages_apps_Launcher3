@@ -192,6 +192,13 @@
             android:autoRemoveFromRecents="true" />
 
         <activity
+            android:name="com.android.launcher3.settings.RecentsPrivacySettings"
+            android:label="@string/recents_privacy_title"
+            android:theme="@style/HomeSettings.Theme"
+            android:exported="false"
+            android:autoRemoveFromRecents="true" />
+
+        <activity
             android:name="com.android.launcher3.settings.SettingsMisc"
             android:label="@string/misc_category_title"
             android:theme="@style/HomeSettings.Theme"

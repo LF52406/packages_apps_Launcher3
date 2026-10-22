@@ -24,6 +24,17 @@
             android:persistent="true"
             launcher:iconSpaceReserved="false" />
 
+        <Preference
+            android:key="recents_privacy_apps"
+            android:title="@string/recents_privacy_title"
+            android:summary="@string/recents_privacy_summary"
+            launcher:iconSpaceReserved="false">
+            <intent
+                android:action="android.intent.action.APPLICATION_PREFERENCES"
+                android:targetPackage="com.android.launcher3"
+                android:targetClass="com.android.launcher3.settings.RecentsPrivacySettings" />
+        </Preference>
+
     </PreferenceCategory>
 
     <PreferenceCategory
