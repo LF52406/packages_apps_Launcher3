@@ -165,12 +165,13 @@ private constructor(@JvmField val grid: GridOption, context: Context, ta: TypedA
                 R.styleable.ProfileDisplayOption_allAppsIconSizeTwoPanelPortrait,
                 R.styleable.ProfileDisplayOption_allAppsIconSizeTwoPanelLandscape,
             ) { i, v ->
-                getFloat(i, v) *
-                    if (i == R.styleable.ProfileDisplayOption_allAppsIconSize) {
-                        iconSizeModifier
-                    } else {
-                        1f
-                    }
+                // The inherited workspace icon size already includes iconSizeModifier.
+                // Apply the modifier only when All Apps defines its own size.
+                if (i == R.styleable.ProfileDisplayOption_allAppsIconSize) {
+                    if (hasValue(i)) getFloat(i, v) * iconSizeModifier else v
+                } else {
+                    getFloat(i, v)
+                }
             }
             .toFloatArray()
 
