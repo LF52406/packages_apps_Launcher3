@@ -418,7 +418,7 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
         mDotParams = new DotRenderer.DrawParams();
         mDotParams.setDotColor(Themes.getAttrColor(context, R.attr.notificationDotColor));
 
-        if (mDisplay == DISPLAY_ALL_APPS) {
+        if (mDisplay == DISPLAY_ALL_APPS || mDisplay == DISPLAY_PREDICTION_ROW) {
             mDotRenderer = new DotRenderer(
                     mActivity.getDeviceProfile().getAllAppsProfile().getIconSizePx()
             );
@@ -702,7 +702,10 @@ public class BubbleTextView extends TextView implements ItemInfoUpdateReceiver,
     protected boolean shouldUseTheme() {
         return mDisplay == DISPLAY_WORKSPACE || mDisplay == DISPLAY_FOLDER
                 || mDisplay == DISPLAY_TASKBAR
-                || (mThemeAllAppsIcons && mDisplay == DISPLAY_ALL_APPS);
+                // Prediction-row icons live in All Apps and must follow the same
+                // theme preference, Monet palette and custom shape as the A-Z icons.
+                || (mThemeAllAppsIcons && (mDisplay == DISPLAY_ALL_APPS
+                        || mDisplay == DISPLAY_PREDICTION_ROW));
     }
 
     /**

@@ -266,6 +266,12 @@ public class PredictionRowView<T extends Context & ActivityContext>
                 predictedItem.cellX = i;
                 predictedItem.cellY = 0;
                 icon.applyFromWorkspaceItem(predictedItem);
+                // Predictions use WorkspaceItemInfo, unlike the A-Z AppInfo icons.
+                // Workspace binding intentionally skips high-res validation, but
+                // a prediction may carry an unthemed/low-res cached bitmap.
+                // Request the correct themed cache entry asynchronously so it
+                // adopts the current All Apps Monet palette and custom shape.
+                icon.verifyHighRes();
             } else {
                 icon.setVisibility(predictionCount == 0 ? GONE : INVISIBLE);
             }
