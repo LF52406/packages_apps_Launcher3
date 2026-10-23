@@ -50,6 +50,21 @@
         android:background="@color/overview_foreground_scrim_color"
         android:alpha="0" />
 
+    <!-- Non-interactive centre mark; visible only while the thumbnail is privacy-blurred.
+         Drawn above both the privacy mask and the Recents dim scrim. -->
+    <ImageView
+        android:id="@+id/task_thumbnail_privacy_emblem"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_recents_privacy_emblem"
+        android:scaleType="fitCenter"
+        android:alpha="0.52"
+        android:visibility="invisible"
+        android:importantForAccessibility="no"
+        android:clickable="false"
+        android:focusable="false" />
+
     <View
         android:id="@+id/splash_background"
         android:layout_width="match_parent"

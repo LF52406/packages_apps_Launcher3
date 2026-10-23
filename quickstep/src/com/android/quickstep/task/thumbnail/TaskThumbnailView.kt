@@ -48,6 +48,9 @@ import com.android.quickstep.views.FixedSizeImageView
 class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
     private val scrimView: View by lazy { findViewById(R.id.task_thumbnail_scrim) }
     private val privacyScrimView: View by lazy { findViewById(R.id.task_thumbnail_privacy_scrim) }
+    private val privacyEmblemView: View by lazy {
+        findViewById(R.id.task_thumbnail_privacy_emblem)
+    }
     private val liveTileView: LiveTileView by lazy { findViewById(R.id.task_thumbnail_live_tile) }
     private val thumbnailView: FixedSizeImageView by lazy { findViewById(R.id.task_thumbnail) }
     private val splashBackground: View by lazy { findViewById(R.id.splash_background) }
@@ -183,6 +186,7 @@ class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
         thumbnailView.setImageBitmap(null)
         thumbnailView.setRenderEffect(null)
         privacyScrimView.isInvisible = true
+        privacyEmblemView.isInvisible = true
         splashBackground.alpha = 0f
         splashBackground.setBackgroundColor(Color.TRANSPARENT)
         splashIcon.alpha = 0f
@@ -212,6 +216,8 @@ class TaskThumbnailView : FrameLayout, ViewPool.Reusable {
             }
         }
         privacyScrimView.isInvisible = false
+        // A low-contrast mark above the privacy mask. Never part of the task snapshot.
+        privacyEmblemView.isInvisible = false
     }
 
     private fun drawAppLocked(@ColorInt background: Int) {

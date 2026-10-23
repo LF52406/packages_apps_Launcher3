@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Original faceted privacy mark, inspired by the low-key placement of HyperOS.
+     Two mirrored wings and a central negative-space diamond suggest an M. -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="40dp"
+    android:height="40dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <path
+        android:fillColor="#FFF2F2F2"
+        android:pathData="M21.5,5 L10,11.7 Q6.5,13.7 6.5,18.1 L6.5,32.2 Q6.5,35.8 10,37.8 L21.5,44 L21.5,29.6 L16.3,24.5 L21.5,19.4 Z" />
+    <path
+        android:fillColor="#FFF2F2F2"
+        android:pathData="M26.5,5 L38,11.7 Q41.5,13.7 41.5,18.1 L41.5,32.2 Q41.5,35.8 38,37.8 L26.5,44 L26.5,29.6 L31.7,24.5 L26.5,19.4 Z" />
+</vector>
